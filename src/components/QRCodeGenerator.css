@@ -1,0 +1,30 @@
+/* src/components/QRCodeGenerator.css */
+.qr-code-generator {
+    display: flex;
+    padding: 20px;
+  }
+  
+  .navbar {
+    width: 50%;
+    padding: 10px;
+    background: #f8f8f8;
+  }
+  
+  .sub-navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .preview-section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .preview-section img {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
