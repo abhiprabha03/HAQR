@@ -6,6 +6,8 @@ import QrCode from './pages/QrCode';
 import AnalyticsPage from './pages/AnalyticsPage'; // Updated import
 import Signup from './pages/Signup';
 import QRCodeGenerator from './components/QRCodeGenerator';
+import PremiumPage from './components/PurschasePlans';
+
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },
+      {
+        path: "/pricing",
+        element: <PremiumPage />, // Ensure PremiumPage displays the purchase plans
       },
       // Add a route for /sms that will serve the sms.js file from public directory
       {

@@ -21,7 +21,7 @@
 //   const [selectedPattern, setSelectedPattern] = useState("default");
 //   const [logo, setLogo] = useState(null); // For managing logo
 //   const [logoSize, setLogoSize] = useState(0.5); // Separate state for logo size
-  
+
 //   const handleSendSMS = () => {
 //     if (smsDetails.number && smsDetails.message) {
 //       // Navigate to /sms page with query params
@@ -49,11 +49,11 @@
 //     subject: "",
 //     body: "",
 //   });
-  
+
 //   const [phoneDetails, setPhoneDetails] = useState({
 //     phoneNumber: "",
 //   });
-  
+
 //   const [isProcessing, setIsProcessing] = useState(false);
 //   const [qrConfig, setQrConfig] = useState({
 //     url: "",
@@ -87,45 +87,45 @@
 //     qrPositionY: 0.5,
 //     qrSize: 150
 //   });
-  
+
 //   const renderEyeShapes = {
 //     rounded: (x, y, size, innerColor, outerColor) => (
 //       <>
-//         <rect 
-//           x={x} 
-//           y={y} 
-//           width={size} 
-//           height={size} 
-//           fill={outerColor} 
-//           rx={size/4} 
-//           ry={size/4} 
+//         <rect
+//           x={x}
+//           y={y}
+//           width={size}
+//           height={size}
+//           fill={outerColor}
+//           rx={size/4}
+//           ry={size/4}
 //         />
-//         <rect 
-//           x={x + size/4} 
-//           y={y + size/4} 
-//           width={size/2} 
-//           height={size/2} 
-//           fill={innerColor} 
-//           rx={size/8} 
-//           ry={size/8} 
+//         <rect
+//           x={x + size/4}
+//           y={y + size/4}
+//           width={size/2}
+//           height={size/2}
+//           fill={innerColor}
+//           rx={size/8}
+//           ry={size/8}
 //         />
 //       </>
 //     ),
 //     square: (x, y, size, innerColor, outerColor) => (
 //       <>
-//         <rect 
-//           x={x} 
-//           y={y} 
-//           width={size} 
-//           height={size} 
-//           fill={outerColor} 
+//         <rect
+//           x={x}
+//           y={y}
+//           width={size}
+//           height={size}
+//           fill={outerColor}
 //         />
-//         <rect 
-//           x={x + size/4} 
-//           y={y + size/4} 
-//           width={size/2} 
-//           height={size/2} 
-//           fill={innerColor} 
+//         <rect
+//           x={x + size/4}
+//           y={y + size/4}
+//           width={size/2}
+//           height={size/2}
+//           fill={innerColor}
 //         />
 //       </>
 //     ),
@@ -148,12 +148,12 @@
 
 //       return (
 //         <>
-//           <polygon 
-//             points={points} 
+//           <polygon
+//             points={points}
 //             fill={outerColor}
 //           />
-//           <polygon 
-//             points={innerPoints} 
+//           <polygon
+//             points={innerPoints}
 //             fill={innerColor}
 //           />
 //         </>
@@ -163,8 +163,8 @@
 //       <>
 //         <path
 //           d={`
-//             M${x + size/2},${y} 
-//             Q${x + size},${y + size/2} ${x + size/2},${y + size} 
+//             M${x + size/2},${y}
+//             Q${x + size},${y + size/2} ${x + size/2},${y + size}
 //             Q${x},${y + size/2} ${x + size/2},${y}
 //             M${x + size/2},${y}
 //             Q${x},${y + size/2} ${x + size/2},${y + size}
@@ -172,21 +172,19 @@
 //           `}
 //           fill={outerColor}
 //         />
-//         <circle 
-//           cx={x + size/2} 
-//           cy={y + size/2} 
-//           r={size/4} 
+//         <circle
+//           cx={x + size/2}
+//           cy={y + size/2}
+//           r={size/4}
 //           fill={innerColor}
 //         />
 //       </>
 //     )
 //   };
 
-
-
 //   useEffect(() => {
 //     const patternConfig = patternConfigs[selectedPattern] || patternConfigs.default;
-  
+
 //     const qrCodeOptions = {
 //       width: qrConfig.size,
 //       height: qrConfig.size,
@@ -227,7 +225,7 @@
 //         mode: "detailed",                    // Use detailed rendering for the logo
 //         sharp: true,                         // Enhances sharpness for a clearer appearance
 //       },
-      
+
 //       stickerOptions: qrConfig.sticker
 //         ? {
 //             data: qrConfig.sticker,
@@ -239,7 +237,7 @@
 //           }
 //         : null, // Include sticker options if a sticker is selected
 //     };
-  
+
 //     try {
 //       // Initialize or update QRCodeStyling instance
 //       if (!qrCode.current) {
@@ -247,20 +245,20 @@
 //       } else {
 //         qrCode.current.update(qrCodeOptions);
 //       }
-  
+
 //       // Render QR code
 //       if (canvasRef.current) {
 //         canvasRef.current.innerHTML = ""; // Clear previous QR code
 //         qrCode.current.append(canvasRef.current); // Append updated QR code
 //       }
-  
+
 //       // Update logo separately
 //       if (qrConfig.logo) {
 //         qrCode.current.update({
 //           image: qrConfig.logo,
 //         });
 //       }
-  
+
 //       // Validate and render sticker placement
 //       if (qrConfig.sticker) {
 //         updatePreview(); // Adjust this function to validate and re-render sticker placement
@@ -346,7 +344,7 @@
 //     organic: "rounded",
 //     pixel: "square"
 //   };
-  
+
 //   const patternConfigs = {
 //     default: {
 //       dotsOptions: { type: "rounded" }
@@ -593,7 +591,6 @@
 //     }
 //   };
 
-
 //   const canvasRef = useRef(null);
 //   const STICKER_IMAGES = [
 //     "/sticker.png",
@@ -611,17 +608,6 @@
 //     "/sticker15.png",
 //     "/sticker18.png",
 //     "/sticker19.png",
-
-
-
-
-
-
-
-
-
-
-
 
 //   ];
 //   const STICKER_POSITIONS = [
@@ -641,11 +627,7 @@
 //     { x: 0.5, y: 0.3 },
 //     { x: 0.5, y: 0.35 },
 
-
-
 //   ];
-
-
 
 //   // Function to handle sticker selection
 
@@ -690,7 +672,6 @@
 //     img.src = stickerPath;
 //   };
 
-
 //   const updatePreview = () => {
 //     if (!previewCanvasRef.current) return;
 
@@ -727,12 +708,11 @@
 //       logoImg.src = qrConfig.logo;
 //     }
 //   };
-  
+
 //   // Trigger updatePreview when logoSize or qrConfig changes
 //   useEffect(() => {
 //     updatePreview();
 //   }, [qrConfig.logoSize, qrConfig.qrSize, qrConfig.logo]);
-
 
 //   // Helper function for hexagon points calculation
 //   const calculateHexagonPoints = (x, y, size) => [
@@ -743,7 +723,6 @@
 //     [x, y + (3 * size) / 4],
 //     [x, y + size / 4],
 //   ];
-
 
 //   const designStyles = {
 //     modern: {
@@ -855,7 +834,6 @@
 //     },
 //   };
 
-
 //   const stickerStyles = {
 //     none: null,
 //     gloss: {
@@ -928,25 +906,25 @@
 //       shape: qrConfig.shape,
 //       shapeOptions: qrConfig.shapeOptions
 //     };
-  
+
 //     if (!qrCode.current) {
 //       qrCode.current = new QRCodeStyling(qrCodeOptions);
 //     } else {
 //       qrCode.current.update(qrCodeOptions);
 //     }
-  
+
 //     // Handle logo separately to prevent conflicts
 //     if (qrConfig.logo) {
 //       qrCode.current.update({
 //         image: qrConfig.logo,
 //       });
 //     }
-  
+
 //     // Render QR code
 //     if (canvasRef.current) {
 //       canvasRef.current.innerHTML = ""; // Clear previous QR code
 //       qrCode.current.append(canvasRef.current); // Append updated QR code
-  
+
 //       // Shape-specific styling
 //       switch (qrConfig.shape) {
 //         case 'circle':
@@ -961,13 +939,13 @@
 //         default:
 //           canvasRef.current.style.clipPath = 'none';
 //       }
-  
+
 //       // Border and additional styling
 //       canvasRef.current.style.borderRadius = '50%';
 //       canvasRef.current.style.border = `${qrConfig.borderWidth || 2}px solid ${qrConfig.borderColor || '#000000'}`;
 //       canvasRef.current.style.boxSizing = 'border-box';
 //     }
-  
+
 //     // Ensure sticker doesn't obscure essential parts
 //     if (qrConfig.sticker) {
 //       updatePreview();
@@ -978,7 +956,7 @@
 //     const userConfirmation = window.confirm(
 //       "Do you want to enable analytics for this QR Code? This will mask the URL and track clicks."
 //     );
-  
+
 //     if (userConfirmation) {
 //       try {
 //         const maskedUrl = await generateMaskedUrl(qrConfig.url);
@@ -993,7 +971,7 @@
 //       alert("Analytics not enabled.");
 //     }
 //   };
-  
+
 //   const generateMaskedUrl = async (originalUrl) => {
 //     try {
 //       const response = await fetch("http://localhost:3000/generate", {
@@ -1001,7 +979,7 @@
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify({ originalUrl }),
 //       });
-  
+
 //       const data = await response.json();
 //       return data.maskedUrl; // The masked URL returned by your server
 //     } catch (error) {
@@ -1009,7 +987,7 @@
 //       throw new Error("Could not generate masked URL");
 //     }
 //   };
-  
+
 //   const saveQrCodeWithAnalytics = async (maskedUrl) => {
 //     try {
 //       await fetch("http://localhost:3000/save-qr", { // Adjust API URL to match your backend
@@ -1022,7 +1000,7 @@
 //       throw new Error("Could not save QR code with analytics");
 //     }
 //   };
-  
+
 //   const handleGenerateQrCode = async () => {
 //     try {
 //       const maskedUrl = await generateMaskedUrl(qrConfig.url);
@@ -1036,7 +1014,7 @@
 //       alert("Failed to generate QR code. Please try again.");
 //     }
 //   };
-  
+
 //   const handleDownload = async () => {
 //     try {
 //       await handleAnalyticsOption(); // Prompt user for analytics
@@ -1076,8 +1054,6 @@
 
 //     // Rest of your component...
 
-
-
 //     // Add the logic to update dotsOptions and other specific configurations only when needed:
 //     useEffect(() => {
 //       applyShapeToCanvas(); // Ensure canvas reflects the selected shape
@@ -1089,8 +1065,6 @@
 //         canvas.style.clipPath = shapeOptions[qrShape]?.clipPath || 'none'; // Apply the selected clipPath
 //       }
 //     };
-
-
 
 //     const handlePatternChange = (pattern) => {
 //       setQrConfig((prev) => ({
@@ -1177,7 +1151,6 @@
 //     );
 //   };
 
-
 //   // Preset styles data
 
 //   const applyShapeToCanvas = () => {
@@ -1191,7 +1164,6 @@
 //     applyShapeToCanvas();
 //   }, [qrShape]);
 
-
 //   const renderTabContent = () => {
 //     switch (activeTab) {
 //       case "shapes":
@@ -1202,9 +1174,6 @@
 //             setQrShape={setQrShape}  // Ensure this is passed
 //           />
 //         );
-
-
-
 
 //       case "basic":
 //         return (
@@ -1330,7 +1299,7 @@
 //                 <option value="hexagon">Hexagon</option>
 //                 <option value="flower">Flower</option>
 //               </select>
-        
+
 //               <label className="block">
 //                 Eye Inner Color:
 //                 <input
@@ -1343,7 +1312,7 @@
 //                   className="ml-2"
 //                 />
 //               </label>
-        
+
 //               <label className="block">
 //                 Eye Outer Color:
 //                 <input
@@ -1383,7 +1352,6 @@
 //   />
 // </div>
 
-
 // {/* Logo Size Slider */}
 // {qrConfig.logo && (
 //   <div className="mb-4">
@@ -1411,15 +1379,13 @@
 //   </div>
 // )}
 
-              
 //             </div>
-            
+
 //           );
-      
+
 //       case "effects":
 //         return (
 //           <div className="space-y-4">
-
 
 //             <div className="space-y-2">
 //               <label className="block">Sticker Type:</label>
@@ -1571,7 +1537,6 @@
 //           </div>
 //         );
 
-
 //         ;
 
 //       // case "styles":
@@ -1581,7 +1546,6 @@
 
 //     };
 //   }
-
 
 //   const getStickerStyle = () => {
 //     const style = stickerTypes[qrConfig.stickerType];
@@ -1601,7 +1565,6 @@
 //     };
 //   };
 
-  
 //   const renderPreview = () => (
 //     qrConfig.sticker ? (
 //       <canvas
@@ -1629,9 +1592,6 @@
 //       />
 //     )
 // );
-
-
-
 
 // // const handleContinue = () => {
 // //   if (url.trim()) {
@@ -1746,15 +1706,10 @@
 //           dataToEncode = `https://haqr.surge.sh?number=${encodeURIComponent(smsDetails.number)}&message=${encodeURIComponent(smsDetails.message)}`;
 //           break;
 
-        
-        
-        
 //       case "phone":
 //         // For dialing, use 'TEL:' URL scheme
 //         dataToEncode = `tel:${phoneDetails.number}`;
 //         break;
-        
-        
 
 //       case "geo":
 //         dataToEncode = `geo:${geoDetails.latitude},${geoDetails.longitude}`;
@@ -1928,9 +1883,6 @@
 //           </button>
 //         </div>
 //       )}
-    
-
-
 
 //           {inputType === "geo" && (
 //             <div className="space-y-4">
@@ -2050,9 +2002,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { Frame, Square, Circle, Triangle, Hexagon, Shapes } from "lucide-react";
-import { Sparkles } from 'lucide-react';
+import { Sparkles } from "lucide-react";
 import QRCode from "react-qr-code";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 
 const QRGenerator = () => {
@@ -2062,21 +2014,45 @@ const QRGenerator = () => {
   const [url, setUrl] = useState(""); // Manages the URL input
   const [isUrlEntered, setIsUrlEntered] = useState(false);
   const [activeTab, setActiveTab] = useState("basic");
-  const [wifiDetails, setWifiDetails] = useState({ ssid: "", password: "", encryption: "WPA" });
+  const [wifiDetails, setWifiDetails] = useState({
+    ssid: "",
+    password: "",
+    encryption: "WPA",
+  });
   const [textInput, setTextInput] = useState("");
   const [qrShape, setQrShape] = useState("square");
   const [selectedStyle, setSelectedStyle] = useState("neonGlow");
   const [inputType, setInputType] = useState("url");
   const [selectedPattern, setSelectedPattern] = useState("default");
   const [logo, setLogo] = useState(null); // For managing logo
-  const [logoSize, setLogoSize] = useState(0.5); // Separate state for logo size
-  
+  const [logoSize, setLogoSize] = useState(0.5);
+  const [vcardDetails, setVcardDetails] = useState({
+    fullName: "",
+    organization: "",
+    phone: "",
+    email: "",
+    address: "",
+  });
+
+  const [upiDetails, setUpiDetails] = useState({
+    vpa: "",
+    payeeName: "",
+    currency: "INR",
+    amount: "",
+    remark: "",
+  });
+  // Separate state for logo size
+
   const handleSendSMS = () => {
     if (smsDetails.number && smsDetails.message) {
       // Navigate to /sms page with query params
-      navigate(`/sms?number=${encodeURIComponent(smsDetails.number)}&message=${encodeURIComponent(smsDetails.message)}`);
+      navigate(
+        `/sms?number=${encodeURIComponent(
+          smsDetails.number
+        )}&message=${encodeURIComponent(smsDetails.message)}`
+      );
     } else {
-      alert('Please provide both phone number and message.');
+      alert("Please provide both phone number and message.");
     }
   };
   const [calendarDetails, setCalendarDetails] = useState({
@@ -2098,20 +2074,20 @@ const QRGenerator = () => {
     subject: "",
     body: "",
   });
-  
+
   const [phoneDetails, setPhoneDetails] = useState({
     phoneNumber: "",
   });
-  
+
   const [isProcessing, setIsProcessing] = useState(false);
   const [qrConfig, setQrConfig] = useState({
     url: "",
     size: 200,
-    shape: 'square',
-    clipPath: 'none',
+    shape: "square",
+    clipPath: "none",
     dotsOption: {
-      type: 'dots',
-      color: '#000000'
+      type: "dots",
+      color: "#000000",
     },
     background: "#FFFFFF",
     gradientType: "linear",
@@ -2127,84 +2103,72 @@ const QRGenerator = () => {
     stickerSize: "medium",
     stickerOpacity: 0.8,
     logo: null,
-    logoSize:200,
+    logoSize: 200,
     sticker: null,
     pattern: "default",
     patternStyles: "diamond",
     patternConfigs: "default",
     qrPositionX: 0.5, // Center by default (percentage relative to sticker size)
     qrPositionY: 0.5,
-    qrSize: 150
+    qrSize: 150,
   });
-  
+
   const renderEyeShapes = {
     rounded: (x, y, size, innerColor, outerColor) => (
       <>
-        <rect 
-          x={x} 
-          y={y} 
-          width={size} 
-          height={size} 
-          fill={outerColor} 
-          rx={size/4} 
-          ry={size/4} 
+        <rect
+          x={x}
+          y={y}
+          width={size}
+          height={size}
+          fill={outerColor}
+          rx={size / 4}
+          ry={size / 4}
         />
-        <rect 
-          x={x + size/4} 
-          y={y + size/4} 
-          width={size/2} 
-          height={size/2} 
-          fill={innerColor} 
-          rx={size/8} 
-          ry={size/8} 
+        <rect
+          x={x + size / 4}
+          y={y + size / 4}
+          width={size / 2}
+          height={size / 2}
+          fill={innerColor}
+          rx={size / 8}
+          ry={size / 8}
         />
       </>
     ),
     square: (x, y, size, innerColor, outerColor) => (
       <>
-        <rect 
-          x={x} 
-          y={y} 
-          width={size} 
-          height={size} 
-          fill={outerColor} 
-        />
-        <rect 
-          x={x + size/4} 
-          y={y + size/4} 
-          width={size/2} 
-          height={size/2} 
-          fill={innerColor} 
+        <rect x={x} y={y} width={size} height={size} fill={outerColor} />
+        <rect
+          x={x + size / 4}
+          y={y + size / 4}
+          width={size / 2}
+          height={size / 2}
+          fill={innerColor}
         />
       </>
     ),
     hexagon: (x, y, size, innerColor, outerColor) => {
       const points = [
-        `${x + size/2},${y}`,
-        `${x + size},${y + size/4}`,
-        `${x + size},${y + 3*size/4}`,
-        `${x + size/2},${y + size}`,
-        `${x},${y + 3*size/4}`,
-        `${x},${y + size/4}`
-      ].join(' ');
+        `${x + size / 2},${y}`,
+        `${x + size},${y + size / 4}`,
+        `${x + size},${y + (3 * size) / 4}`,
+        `${x + size / 2},${y + size}`,
+        `${x},${y + (3 * size) / 4}`,
+        `${x},${y + size / 4}`,
+      ].join(" ");
 
       const innerPoints = [
-        `${x + size/2},${y + size/4}`,
-        `${x + 3*size/4},${y + size/2}`,
-        `${x + size/2},${y + 3*size/4}`,
-        `${x + size/4},${y + size/2}`
-      ].join(' ');
+        `${x + size / 2},${y + size / 4}`,
+        `${x + (3 * size) / 4},${y + size / 2}`,
+        `${x + size / 2},${y + (3 * size) / 4}`,
+        `${x + size / 4},${y + size / 2}`,
+      ].join(" ");
 
       return (
         <>
-          <polygon 
-            points={points} 
-            fill={outerColor}
-          />
-          <polygon 
-            points={innerPoints} 
-            fill={innerColor}
-          />
+          <polygon points={points} fill={outerColor} />
+          <polygon points={innerPoints} fill={innerColor} />
         </>
       );
     },
@@ -2212,37 +2176,37 @@ const QRGenerator = () => {
       <>
         <path
           d={`
-            M${x + size/2},${y} 
-            Q${x + size},${y + size/2} ${x + size/2},${y + size} 
-            Q${x},${y + size/2} ${x + size/2},${y}
-            M${x + size/2},${y}
-            Q${x},${y + size/2} ${x + size/2},${y + size}
-            Q${x + size},${y + size/2} ${x + size/2},${y}
+            M${x + size / 2},${y} 
+            Q${x + size},${y + size / 2} ${x + size / 2},${y + size} 
+            Q${x},${y + size / 2} ${x + size / 2},${y}
+            M${x + size / 2},${y}
+            Q${x},${y + size / 2} ${x + size / 2},${y + size}
+            Q${x + size},${y + size / 2} ${x + size / 2},${y}
           `}
           fill={outerColor}
         />
-        <circle 
-          cx={x + size/2} 
-          cy={y + size/2} 
-          r={size/4} 
+        <circle
+          cx={x + size / 2}
+          cy={y + size / 2}
+          r={size / 4}
           fill={innerColor}
         />
       </>
-    )
+    ),
   };
 
   const generateUniqueQrUrl = () => {
     const uniqueId = Math.random().toString(36).substring(2, 10); // Generate a random ID
     return `https://qrcodeinc.vercel.app/landing-page?id=${uniqueId}`;
   };
-  
+
   // Example usage:
   const qrCodeUrl = generateUniqueQrUrl();
-  
 
   useEffect(() => {
-    const patternConfig = patternConfigs[selectedPattern] || patternConfigs.default;
-  
+    const patternConfig =
+      patternConfigs[selectedPattern] || patternConfigs.default;
+
     const qrCodeOptions = {
       width: qrConfig.size,
       height: qrConfig.size,
@@ -2273,17 +2237,17 @@ const QRGenerator = () => {
         color: qrConfig.background || "#ffffff",
       },
       imageOptions: {
-        crossOrigin: "anonymous",             // Ensures the logo can be loaded from external sources
-        image: qrConfig.logo || null,        // Logo image
-        margin: qrConfig.logoMargin || 0.1,    // Adds spacing around the logo
-        scale: qrConfig.logoScale || 0.3,    // Adjusted scale for visibility
-        cornerRadius: 10,                    // Adds rounded corners to the logo for aesthetic appeal
-        hideBackgroundDots: true,            // Ensures dots are not visible beneath the logo
-        imageResolution: 500,                // Increased resolution for better clarity
-        mode: "detailed",                    // Use detailed rendering for the logo
-        sharp: true,                         // Enhances sharpness for a clearer appearance
+        crossOrigin: "anonymous", // Ensures the logo can be loaded from external sources
+        image: qrConfig.logo || null, // Logo image
+        margin: qrConfig.logoMargin || 0.1, // Adds spacing around the logo
+        scale: qrConfig.logoScale || 0.3, // Adjusted scale for visibility
+        cornerRadius: 10, // Adds rounded corners to the logo for aesthetic appeal
+        hideBackgroundDots: true, // Ensures dots are not visible beneath the logo
+        imageResolution: 500, // Increased resolution for better clarity
+        mode: "detailed", // Use detailed rendering for the logo
+        sharp: true, // Enhances sharpness for a clearer appearance
       },
-      
+
       stickerOptions: qrConfig.sticker
         ? {
             data: qrConfig.sticker,
@@ -2295,7 +2259,7 @@ const QRGenerator = () => {
           }
         : null, // Include sticker options if a sticker is selected
     };
-  
+
     try {
       // Initialize or update QRCodeStyling instance
       if (!qrCode.current) {
@@ -2303,20 +2267,20 @@ const QRGenerator = () => {
       } else {
         qrCode.current.update(qrCodeOptions);
       }
-  
+
       // Render QR code
       if (canvasRef.current) {
         canvasRef.current.innerHTML = ""; // Clear previous QR code
         qrCode.current.append(canvasRef.current); // Append updated QR code
       }
-  
+
       // Update logo separately
       if (qrConfig.logo) {
         qrCode.current.update({
           image: qrConfig.logo,
         });
       }
-  
+
       // Validate and render sticker placement
       if (qrConfig.sticker) {
         updatePreview(); // Adjust this function to validate and re-render sticker placement
@@ -2325,72 +2289,72 @@ const QRGenerator = () => {
       console.error("Error generating QR code:", error);
     }
     updatePreview();
-  }, [qrConfig, selectedPattern,logoSize,logo]);
+  }, [qrConfig, selectedPattern, logoSize, logo]);
 
   const shapeOptions = {
     square: {
       name: "Square",
       icon: Square,
-      clipPath: "none"
+      clipPath: "none",
     },
     circle: {
       name: "Circle",
       icon: Circle,
-      clipPath: "none"
+      clipPath: "none",
     },
     hexagon: {
       name: "Hexagon",
       icon: Hexagon,
-      clipPath: "none"
+      clipPath: "none",
     },
     triangle: {
       name: "Triangle",
       icon: Triangle,
-      clipPath: "none"
-    }
+      clipPath: "none",
+    },
   };
   const patternStyles = {
     dots: {
       preview: "⚫",
       name: "Classic Dots",
-      description: "Traditional circular dot pattern"
+      description: "Traditional circular dot pattern",
     },
     squares: {
       preview: "⬛",
       name: "Geometric Squares",
-      description: "Sharp, modern square design"
+      description: "Sharp, modern square design",
     },
     rounded: {
       preview: "○",
       name: "Soft Rounded",
-      description: "Gentle, smooth-edged dots"
+      description: "Gentle, smooth-edged dots",
     },
     diamond: {
       preview: "◈",
       name: "Diamond Cut",
-      description: "Elegant diamond-shaped pattern"
+      description: "Elegant diamond-shaped pattern",
     },
     // New patterns
     gradient: {
       preview: "🌈",
       name: "Gradient Flow",
-      description: "Smooth color transition"
+      description: "Smooth color transition",
     },
     tech: {
       preview: "⚡",
       name: "Tech Circuit",
-      description: "High-tech digital style"
+      description: "High-tech digital style",
     },
     organic: {
       preview: "🍃",
       name: "Nature Waves",
-      description: "Fluid, organic pattern"
+      description: "Fluid, organic pattern",
     },
     pixel: {
       preview: "🔲",
       name: "Pixel Grid",
-      description: "Retro 8-bit inspired design"
-    }
+      description: "Retro 8-bit inspired design",
+    },
   };
   const patternTypeMapping = {
     dots: "dots",
@@ -2400,12 +2364,12 @@ const QRGenerator = () => {
     gradient: "square", // You can adjust these mappings
     tech: "square",
     organic: "rounded",
-    pixel: "square"
+    pixel: "square",
   };
-  
+
   const patternConfigs = {
     default: {
-      dotsOptions: { type: "rounded" }
+      dotsOptions: { type: "rounded" },
     },
     dots: {
       dotsOptions: {
@@ -2416,10 +2380,10 @@ const QRGenerator = () => {
           colorStops: [
             { offset: 0, color: "#000000" },
             { offset: 0.5, color: "#666666" },
-            { offset: 1, color: "#000000" }
-          ]
-        }
-      }
+            { offset: 1, color: "#000000" },
+          ],
+        },
+      },
     },
     squares: {
       dotsOptions: {
@@ -2431,10 +2395,10 @@ const QRGenerator = () => {
           colorStops: [
             { offset: 0, color: "#000000" },
             { offset: 0.5, color: "#333333" },
-            { offset: 1, color: "#000000" }
-          ]
-        }
-      }
+            { offset: 1, color: "#000000" },
+          ],
+        },
+      },
     },
     rounded: {
       dotsOptions: {
@@ -2445,10 +2409,10 @@ const QRGenerator = () => {
           colorStops: [
             { offset: 0, color: "#000000" },
             { offset: 0.5, color: "#666666" },
-            { offset: 1, color: "#000000" }
-          ]
-        }
-      }
+            { offset: 1, color: "#000000" },
+          ],
+        },
+      },
     },
     diamond: {
       dotsOptions: {
@@ -2459,10 +2423,10 @@ const QRGenerator = () => {
           rotation: 45,
           colorStops: [
             { offset: 0, color: "#000000" },
-            { offset: 1, color: "#666666" }
-          ]
-        }
-      }
+            { offset: 1, color: "#666666" },
+          ],
+        },
+      },
     },
     // New pattern configurations
     gradient: {
@@ -2475,10 +2439,10 @@ const QRGenerator = () => {
           colorStops: [
             { offset: 0, color: "#3498db" },
             { offset: 0.5, color: "#8e44ad" },
-            { offset: 1, color: "#e74c3c" }
-          ]
-        }
-      }
+            { offset: 1, color: "#e74c3c" },
+          ],
+        },
+      },
     },
     tech: {
       dotsOptions: {
@@ -2489,10 +2453,10 @@ const QRGenerator = () => {
           rotation: 45,
           colorStops: [
             { offset: 0, color: "#2ecc71" },
-            { offset: 1, color: "#3498db" }
-          ]
-        }
-      }
+            { offset: 1, color: "#3498db" },
+          ],
+        },
+      },
     },
     organic: {
       dotsOptions: {
@@ -2502,10 +2466,10 @@ const QRGenerator = () => {
           type: "radial",
           colorStops: [
             { offset: 0, color: "#27ae60" },
-            { offset: 1, color: "#2ecc71" }
-          ]
-        }
-      }
+            { offset: 1, color: "#2ecc71" },
+          ],
+        },
+      },
     },
     pixel: {
       dotsOptions: {
@@ -2516,11 +2480,11 @@ const QRGenerator = () => {
           rotation: 135,
           colorStops: [
             { offset: 0, color: "#2c3e50" },
-            { offset: 1, color: "#34495e" }
-          ]
-        }
-      }
-    }
+            { offset: 1, color: "#34495e" },
+          ],
+        },
+      },
+    },
   };
 
   const handleLogoUpload = (event) => {
@@ -2546,8 +2510,8 @@ const QRGenerator = () => {
         eyeShape: "rounded",
         eyeInnerColor: "#00ff87",
         eyeOuterColor: "#60efff",
-        background: "#1a1a1a"
-      }
+        background: "#1a1a1a",
+      },
     },
     pixelArt: {
       name: "Pixel Art",
@@ -2560,8 +2524,8 @@ const QRGenerator = () => {
         eyeShape: "square",
         eyeInnerColor: "#FF71CE",
         eyeOuterColor: "#01CDFE",
-        background: "#ffffff"
-      }
+        background: "#ffffff",
+      },
     },
     geometric: {
       name: "Geometric",
@@ -2574,8 +2538,8 @@ const QRGenerator = () => {
         eyeShape: "diamond",
         eyeInnerColor: "#FF9671",
         eyeOuterColor: "#F9F871",
-        background: "#ffffff"
-      }
+        background: "#ffffff",
+      },
     },
     minimalist: {
       name: "Minimalist",
@@ -2588,8 +2552,8 @@ const QRGenerator = () => {
         eyeShape: "dot",
         eyeInnerColor: "#000000",
         eyeOuterColor: "#000000",
-        background: "#ffffff"
-      }
+        background: "#ffffff",
+      },
     },
     rainbow: {
       name: "Rainbow Wave",
@@ -2602,8 +2566,8 @@ const QRGenerator = () => {
         eyeShape: "rounded",
         eyeInnerColor: "#FF0000",
         eyeOuterColor: "#0000FF",
-        background: "#ffffff"
-      }
+        background: "#ffffff",
+      },
     },
     cosmic: {
       name: "Cosmic",
@@ -2616,8 +2580,8 @@ const QRGenerator = () => {
         eyeShape: "rounded",
         eyeInnerColor: "#FF00E4",
         eyeOuterColor: "#7000FF",
-        background: "#120338"
-      }
+        background: "#120338",
+      },
     },
     retro: {
       name: "Retro",
@@ -2630,8 +2594,8 @@ const QRGenerator = () => {
         eyeShape: "square",
         eyeInnerColor: "#FF6B6B",
         eyeOuterColor: "#6BCB77",
-        background: "#F4EEE0"
-      }
+        background: "#F4EEE0",
+      },
     },
     aqua: {
       name: "Aqua Dream",
@@ -2644,11 +2608,10 @@ const QRGenerator = () => {
         eyeShape: "dot",
         eyeInnerColor: "#00B4D8",
         eyeOuterColor: "#90E0EF",
-        background: "#CAF0F8"
-      }
-    }
+        background: "#CAF0F8",
+      },
+    },
   };
-
 
   const canvasRef = useRef(null);
   const STICKER_IMAGES = [
@@ -2667,24 +2630,12 @@ const QRGenerator = () => {
     "/sticker15.png",
     "/sticker18.png",
     "/sticker19.png",
-
-
-
-
-
-
-
-
-
-
-
-
   ];
   const STICKER_POSITIONS = [
-    { x: 0.5, y: 0.5 },  // First sticker ("/sticker.png")
-    { x: 0.35, y: 0.5 },  // Centered QR code sticker ("/sticker4.png")
-    { x: 0.45, y: 0.65 },  // Third sticker ("/stickre4.png")
-    { x: 0.5, y: 0.5 },  // Fourth sticker ("/stickers/flore.png")
+    { x: 0.5, y: 0.5 }, // First sticker ("/sticker.png")
+    { x: 0.35, y: 0.5 }, // Centered QR code sticker ("/sticker4.png")
+    { x: 0.45, y: 0.65 }, // Third sticker ("/stickre4.png")
+    { x: 0.5, y: 0.5 }, // Fourth sticker ("/stickers/flore.png")
     { x: 0.5, y: 0.5 },
     { x: 0.5, y: 0.5 },
     { x: 0.5, y: 0.5 },
@@ -2696,21 +2647,16 @@ const QRGenerator = () => {
     { x: 0.8, y: 0.85 },
     { x: 0.5, y: 0.3 },
     { x: 0.5, y: 0.35 },
-
-
-
   ];
-
-
 
   // Function to handle sticker selection
 
   const handleStickerSelect = (stickerPath, index) => {
     const img = new Image();
-    img.crossOrigin = 'anonymous';
+    img.crossOrigin = "anonymous";
     img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
       const size = 500;
       canvas.width = size;
       canvas.height = size;
@@ -2724,28 +2670,30 @@ const QRGenerator = () => {
 
       ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
 
-      const stickerDataUrl = canvas.toDataURL('image/png');
+      const stickerDataUrl = canvas.toDataURL("image/png");
 
       // Get the predefined position for this sticker
-      const { x: posX, y: posY } = STICKER_POSITIONS[index] || { x: 0.5, y: 0.5 };
+      const { x: posX, y: posY } = STICKER_POSITIONS[index] || {
+        x: 0.5,
+        y: 0.5,
+      };
 
       setQrConfig((prev) => ({
         ...prev,
         sticker: stickerDataUrl,
-        stickerSize: 'medium',
-        stickerStyle: 'square',
-        qrPositionX: posX,    // Set fixed X position
-        qrPositionY: posY,    // Set fixed Y position
+        stickerSize: "medium",
+        stickerStyle: "square",
+        qrPositionX: posX, // Set fixed X position
+        qrPositionY: posY, // Set fixed Y position
       }));
     };
 
     img.onerror = (error) => {
-      console.error('Error loading sticker image:', error);
+      console.error("Error loading sticker image:", error);
     };
 
     img.src = stickerPath;
   };
-
 
   const updatePreview = () => {
     if (!previewCanvasRef.current) return;
@@ -2783,12 +2731,11 @@ const QRGenerator = () => {
       logoImg.src = qrConfig.logo;
     }
   };
-  
+
   // Trigger updatePreview when logoSize or qrConfig changes
   useEffect(() => {
     updatePreview();
   }, [qrConfig.logoSize, qrConfig.qrSize, qrConfig.logo]);
-
 
   // Helper function for hexagon points calculation
   const calculateHexagonPoints = (x, y, size) => [
@@ -2799,7 +2746,6 @@ const QRGenerator = () => {
     [x, y + (3 * size) / 4],
     [x, y + size / 4],
   ];
-
 
   const designStyles = {
     modern: {
@@ -2849,7 +2795,7 @@ const QRGenerator = () => {
       gradientStart: "#FF512F",
       gradientMiddle: "#F09819",
       gradientEnd: "#FF512F",
-    }
+    },
   };
 
   const stickerTypes = {
@@ -2857,39 +2803,41 @@ const QRGenerator = () => {
       borderRadius: "8px",
       shadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       border: "none",
-      background: "white"
+      background: "white",
     },
     polaroid: {
       borderRadius: "2px",
       shadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
       border: "none",
       padding: "16px 16px 40px 16px",
-      background: "white"
+      background: "white",
     },
     stamp: {
       borderRadius: "2px",
       border: "2px dashed #333",
       padding: "12px",
-      background: "#f8f8f8"
+      background: "#f8f8f8",
     },
     floating: {
       borderRadius: "12px",
-      shadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      shadow:
+        "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
       border: "1px solid rgba(255, 255, 255, 0.1)",
       background: "rgba(255, 255, 255, 0.95)",
-      backdropFilter: "blur(10px)"
+      backdropFilter: "blur(10px)",
     },
     minimal: {
       borderRadius: "0",
       border: "1px solid #e2e2e2",
-      background: "white"
+      background: "white",
     },
     neon: {
       borderRadius: "12px",
       border: "2px solid rgba(255, 255, 255, 0.2)",
       background: "rgba(0, 0, 0, 0.8)",
-      boxShadow: "0 0 20px rgba(66, 220, 219, 0.3), inset 0 0 20px rgba(66, 220, 219, 0.3)"
-    }
+      boxShadow:
+        "0 0 20px rgba(66, 220, 219, 0.3), inset 0 0 20px rgba(66, 220, 219, 0.3)",
+    },
   };
 
   const stickerSizes = {
@@ -2910,7 +2858,6 @@ const QRGenerator = () => {
       padding: "p-12",
     },
   };
-
 
   const stickerStyles = {
     none: null,
@@ -2951,17 +2898,19 @@ const QRGenerator = () => {
         { offset: 0, color: "rgba(255,255,255,0.4)" },
         { offset: 1, color: "rgba(230,240,255,0.1)" },
       ],
-    }
+    },
   };
   useEffect(() => {
-    const patternConfig = patternConfigs[qrConfig.pattern] || patternConfigs.default;
+    const patternConfig =
+      patternConfigs[qrConfig.pattern] || patternConfigs.default;
     const qrCodeOptions = {
       width: qrConfig.size,
       height: qrConfig.size,
       data: qrConfig.url || "https://example.com",
       dotsOptions: {
         type: patternConfig.dotsOptions?.type || "rounded",
-        color: patternConfig.dotsOptions?.color || qrConfig.dotColor || "#000000",
+        color:
+          patternConfig.dotsOptions?.color || qrConfig.dotColor || "#000000",
         gradient: patternConfig.dotsOptions?.gradient || undefined,
         scale: qrConfig.dotsOptions?.scale || 1.0,
       },
@@ -2982,48 +2931,52 @@ const QRGenerator = () => {
         scale: qrConfig.logo ? 0.4 : 0,
       },
       shape: qrConfig.shape,
-      shapeOptions: qrConfig.shapeOptions
+      shapeOptions: qrConfig.shapeOptions,
     };
-  
+
     if (!qrCode.current) {
       qrCode.current = new QRCodeStyling(qrCodeOptions);
     } else {
       qrCode.current.update(qrCodeOptions);
     }
-  
+
     // Handle logo separately to prevent conflicts
     if (qrConfig.logo) {
       qrCode.current.update({
         image: qrConfig.logo,
       });
     }
-  
+
     // Render QR code
     if (canvasRef.current) {
       canvasRef.current.innerHTML = ""; // Clear previous QR code
       qrCode.current.append(canvasRef.current); // Append updated QR code
-  
+
       // Shape-specific styling
       switch (qrConfig.shape) {
-        case 'circle':
-          canvasRef.current.style.clipPath = 'circle(50%)';
+        case "circle":
+          canvasRef.current.style.clipPath = "circle(50%)";
           break;
-        case 'triangle':
-          canvasRef.current.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+        case "triangle":
+          canvasRef.current.style.clipPath =
+            "polygon(50% 0%, 0% 100%, 100% 100%)";
           break;
-        case 'hexagon':
-          canvasRef.current.style.clipPath = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)';
+        case "hexagon":
+          canvasRef.current.style.clipPath =
+            "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
           break;
         default:
-          canvasRef.current.style.clipPath = 'none';
+          canvasRef.current.style.clipPath = "none";
       }
-  
+
       // Border and additional styling
-      canvasRef.current.style.borderRadius = '50%';
-      canvasRef.current.style.border = `${qrConfig.borderWidth || 2}px solid ${qrConfig.borderColor || '#000000'}`;
-      canvasRef.current.style.boxSizing = 'border-box';
+      canvasRef.current.style.borderRadius = "50%";
+      canvasRef.current.style.border = `${qrConfig.borderWidth || 2}px solid ${
+        qrConfig.borderColor || "#000000"
+      }`;
+      canvasRef.current.style.boxSizing = "border-box";
     }
-  
+
     // Ensure sticker doesn't obscure essential parts
     if (qrConfig.sticker) {
       updatePreview();
@@ -3040,7 +2993,9 @@ const QRGenerator = () => {
         const maskedUrl = await generateMaskedUrl(qrConfig.url); // Generate the masked URL
         setQrConfig((prev) => ({ ...prev, url: maskedUrl })); // Update QR code with masked URL
         await saveQrCodeWithAnalytics(maskedUrl); // Save masked URL with analytics
-        alert("Analytics enabled. QR code URL is masked and tracking is active.");
+        alert(
+          "Analytics enabled. QR code URL is masked and tracking is active."
+        );
       } catch (error) {
         console.error("Error enabling analytics:", error);
         alert("Failed to enable analytics. Please try again.");
@@ -3052,11 +3007,14 @@ const QRGenerator = () => {
 
   const generateMaskedUrl = async (originalUrl) => {
     try {
-      const response = await fetch("https://back-1-3fru.onrender.com/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ originalUrl, userId: "yourUserIdHere" }), // Include userId
-      });
+      const response = await fetch(
+        "https://back-1-3fru.onrender.com/generate",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ originalUrl, userId: "yourUserIdHere" }), // Include userId
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to generate masked URL");
@@ -3103,7 +3061,7 @@ const QRGenerator = () => {
       alert("Failed to generate QR code. Please try again.");
     }
   };
-  
+
   const handleDownload = async () => {
     try {
       await handleAnalyticsOption(); // Prompt user for analytics
@@ -3136,14 +3094,15 @@ const QRGenerator = () => {
         clipPath: shapeOptions[shape]?.clipPath || "none",
         dotsOptions: {
           ...prev.dotsOptions,
-          scale: shape === "circle" || shape === "triangle" || shape === "hexagon" ? 1.05 : 1.0,
+          scale:
+            shape === "circle" || shape === "triangle" || shape === "hexagon"
+              ? 1.05
+              : 1.0,
         },
       }));
     };
 
     // Rest of your component...
-
-
 
     // Add the logic to update dotsOptions and other specific configurations only when needed:
     useEffect(() => {
@@ -3153,11 +3112,9 @@ const QRGenerator = () => {
     const applyShapeToCanvas = () => {
       if (previewCanvasRef.current) {
         const canvas = previewCanvasRef.current;
-        canvas.style.clipPath = shapeOptions[qrShape]?.clipPath || 'none'; // Apply the selected clipPath
+        canvas.style.clipPath = shapeOptions[qrShape]?.clipPath || "none"; // Apply the selected clipPath
       }
     };
-
-
 
     const handlePatternChange = (pattern) => {
       setQrConfig((prev) => ({
@@ -3179,10 +3136,11 @@ const QRGenerator = () => {
                 <button
                   key={key}
                   onClick={() => handleShapeChange(key)}
-                  className={`flex flex-col items-center p-3 rounded-lg border transition-all ${qrConfig.shape === key
-                    ? "border-blue-500 bg-blue-900/20 text-blue-400"
-                    : "border-gray-700 hover:border-blue-500/50 text-gray-400 hover:text-blue-400"
-                    }`}
+                  className={`flex flex-col items-center p-3 rounded-lg border transition-all ${
+                    qrConfig.shape === key
+                      ? "border-blue-500 bg-blue-900/20 text-blue-400"
+                      : "border-gray-700 hover:border-blue-500/50 text-gray-400 hover:text-blue-400"
+                  }`}
                 >
                   <Icon className="w-6 h-6 mb-2" />
                   <span className="text-xs">{shape.name}</span>
@@ -3200,10 +3158,11 @@ const QRGenerator = () => {
               <button
                 key={key}
                 onClick={() => handlePatternChange(key)}
-                className={`flex flex-col items-center p-3 rounded-lg border transition-all ${qrConfig.pattern === key
-                  ? "border-blue-500 bg-blue-900/20 text-blue-400"
-                  : "border-gray-700 hover:border-blue-500/50 text-gray-400 hover:text-blue-400"
-                  }`}
+                className={`flex flex-col items-center p-3 rounded-lg border transition-all ${
+                  qrConfig.pattern === key
+                    ? "border-blue-500 bg-blue-900/20 text-blue-400"
+                    : "border-gray-700 hover:border-blue-500/50 text-gray-400 hover:text-blue-400"
+                }`}
               >
                 <span className="text-xl mb-2">{pattern.preview}</span>
                 <span className="text-xs font-medium">{pattern.name}</span>
@@ -3217,7 +3176,9 @@ const QRGenerator = () => {
 
         {/* Quick Settings */}
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-700">QR Code Size</label>
+          <label className="block text-sm font-medium text-gray-700">
+            QR Code Size
+          </label>
           <input
             type="range"
             min="100"
@@ -3227,7 +3188,7 @@ const QRGenerator = () => {
             onChange={(e) =>
               setQrConfig((prev) => ({
                 ...prev,
-                size: Number(e.target.value)
+                size: Number(e.target.value),
               }))
             }
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
@@ -3239,18 +3200,16 @@ const QRGenerator = () => {
           </div>
         </div>
         {/* Color Presets */}
-
       </div>
     );
   };
-
 
   // Preset styles data
 
   const applyShapeToCanvas = () => {
     if (previewCanvasRef.current) {
       const canvas = previewCanvasRef.current;
-      canvas.style.clipPath = shapeOptions[qrShape]?.clipPath || 'none';
+      canvas.style.clipPath = shapeOptions[qrShape]?.clipPath || "none";
     }
   };
 
@@ -3258,20 +3217,17 @@ const QRGenerator = () => {
     applyShapeToCanvas();
   }, [qrShape]);
 
-
   const renderTabContent = () => {
+    // eslint-disable-next-line default-case
     switch (activeTab) {
       case "shapes":
         return (
           <StylesTab
             qrConfig={qrConfig}
             setQrConfig={setQrConfig}
-            setQrShape={setQrShape}  // Ensure this is passed
+            setQrShape={setQrShape} // Ensure this is passed
           />
         );
-
-
-
 
       case "basic":
         return (
@@ -3280,7 +3236,9 @@ const QRGenerator = () => {
               type="text"
               placeholder="Enter URL"
               value={qrConfig.url}
-              onChange={(e) => setQrConfig((prev) => ({ ...prev, url: e.target.value }))}
+              onChange={(e) =>
+                setQrConfig((prev) => ({ ...prev, url: e.target.value }))
+              }
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
             />
             <div className="space-y-2">
@@ -3291,7 +3249,12 @@ const QRGenerator = () => {
                 max="400"
                 step="50"
                 value={qrConfig.size}
-                onChange={(e) => setQrConfig((prev) => ({ ...prev, size: Number(e.target.value) }))}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
+                    ...prev,
+                    size: Number(e.target.value),
+                  }))
+                }
                 className="w-full"
               />
             </div>
@@ -3300,7 +3263,12 @@ const QRGenerator = () => {
               <input
                 type="color"
                 value={qrConfig.background}
-                onChange={(e) => setQrConfig((prev) => ({ ...prev, background: e.target.value }))}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
+                    ...prev,
+                    background: e.target.value,
+                  }))
+                }
                 className="ml-2"
               />
             </label>
@@ -3312,7 +3280,9 @@ const QRGenerator = () => {
           <div className="space-y-4">
             <select
               value={qrConfig.dotsType}
-              onChange={(e) => setQrConfig((prev) => ({ ...prev, dotsType: e.target.value }))}
+              onChange={(e) =>
+                setQrConfig((prev) => ({ ...prev, dotsType: e.target.value }))
+              }
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
             >
               <option value="rounded">Rounded</option>
@@ -3325,7 +3295,10 @@ const QRGenerator = () => {
               value="custom"
               onChange={(e) => {
                 if (e.target.value !== "custom") {
-                  setQrConfig((prev) => ({ ...prev, ...designStyles[e.target.value] }));
+                  setQrConfig((prev) => ({
+                    ...prev,
+                    ...designStyles[e.target.value],
+                  }));
                 }
               }}
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
@@ -3342,7 +3315,12 @@ const QRGenerator = () => {
 
             <select
               value={qrConfig.gradientType}
-              onChange={(e) => setQrConfig((prev) => ({ ...prev, gradientType: e.target.value }))}
+              onChange={(e) =>
+                setQrConfig((prev) => ({
+                  ...prev,
+                  gradientType: e.target.value,
+                }))
+              }
               className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
             >
               <option value="linear">Linear</option>
@@ -3355,7 +3333,12 @@ const QRGenerator = () => {
                 <input
                   type="color"
                   value={qrConfig.gradientStart}
-                  onChange={(e) => setQrConfig((prev) => ({ ...prev, gradientStart: e.target.value }))}
+                  onChange={(e) =>
+                    setQrConfig((prev) => ({
+                      ...prev,
+                      gradientStart: e.target.value,
+                    }))
+                  }
                   className="ml-2"
                 />
               </label>
@@ -3364,7 +3347,12 @@ const QRGenerator = () => {
                 <input
                   type="color"
                   value={qrConfig.gradientMiddle}
-                  onChange={(e) => setQrConfig((prev) => ({ ...prev, gradientMiddle: e.target.value }))}
+                  onChange={(e) =>
+                    setQrConfig((prev) => ({
+                      ...prev,
+                      gradientMiddle: e.target.value,
+                    }))
+                  }
                   className="ml-2"
                 />
               </label>
@@ -3373,7 +3361,12 @@ const QRGenerator = () => {
                 <input
                   type="color"
                   value={qrConfig.gradientEnd}
-                  onChange={(e) => setQrConfig((prev) => ({ ...prev, gradientEnd: e.target.value }))}
+                  onChange={(e) =>
+                    setQrConfig((prev) => ({
+                      ...prev,
+                      gradientEnd: e.target.value,
+                    }))
+                  }
                   className="ml-2"
                 />
               </label>
@@ -3381,118 +3374,124 @@ const QRGenerator = () => {
           </div>
         );
 
-        case "eyes":
-          return (
-            <div className="space-y-4">
-              <select
-                value={qrConfig.eyeShape}
-                onChange={(e) => setQrConfig((prev) => ({
+      case "eyes":
+        return (
+          <div className="space-y-4">
+            <select
+              value={qrConfig.eyeShape}
+              onChange={(e) =>
+                setQrConfig((prev) => ({
                   ...prev,
-                  eyeShape: e.target.value
-                }))}
-                className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
-              >
-                <option value="rounded">Rounded</option>
-                <option value="square">Square</option>
-                <option value="hexagon">Hexagon</option>
-                <option value="flower">Flower</option>
-              </select>
-        
-              <label className="block">
-                Eye Inner Color:
-                <input
-                  type="color"
-                  value={qrConfig.eyeInnerColor}
-                  onChange={(e) => setQrConfig((prev) => ({
+                  eyeShape: e.target.value,
+                }))
+              }
+              className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
+            >
+              <option value="rounded">Rounded</option>
+              <option value="square">Square</option>
+              <option value="hexagon">Hexagon</option>
+              <option value="flower">Flower</option>
+            </select>
+
+            <label className="block">
+              Eye Inner Color:
+              <input
+                type="color"
+                value={qrConfig.eyeInnerColor}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
                     ...prev,
-                    eyeInnerColor: e.target.value
-                  }))}
-                  className="ml-2"
-                />
-              </label>
-        
-              <label className="block">
-                Eye Outer Color:
-                <input
-                  type="color"
-                  value={qrConfig.eyeOuterColor}
-                  onChange={(e) => setQrConfig((prev) => ({
+                    eyeInnerColor: e.target.value,
+                  }))
+                }
+                className="ml-2"
+              />
+            </label>
+
+            <label className="block">
+              Eye Outer Color:
+              <input
+                type="color"
+                value={qrConfig.eyeOuterColor}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
                     ...prev,
-                    eyeOuterColor: e.target.value
-                  }))}
-                  className="ml-2"
-                />
-              </label>
-        {/* Logo Upload */}
-        <div className="mb-4">
-  {/* Logo Upload Input */}
-  <label className="block mb-2 font-semibold">Upload Logo:</label>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={(e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          setQrConfig((prev) => ({
-            ...prev,
-            logo: reader.result,
-            logoSize: prev.logoSize || 100, // Increased size for better visibility
-            logoScale: prev.logoScale || 0.8, // Increased scale for a larger logo
-            logoMargin: 10, // Increased margin around the logo
-          }));
-        };
-        reader.readAsDataURL(file);
-      }
-    }}
-    className="w-full border p-2 rounded"
-  />
-</div>
-
-
-{/* Logo Size Slider */}
-{qrConfig.logo && (
-  <div className="mb-4">
-    <label className="block mb-2 font-semibold">Logo Size:</label>
-    <input
-      type="range"
-      min="10"
-      max="100"
-      step="5"
-      value={qrConfig.logoSize}
-      onChange={(e) => {
-        const newLogoSize = Number(e.target.value);
-        setQrConfig((prev) => ({
-          ...prev,
-          logoSize: newLogoSize,
-          logoScale: newLogoSize / 500, // Dynamically adjust scale
-          logoMargin: Math.max(2, 12 - newLogoSize / 10), // Dynamic margin for spacing
-        }));
-      }}
-      className="w-full cursor-pointer"
-    />
-    <div className="text-sm text-gray-600">
-      Current Logo Size: <span className="font-semibold">{qrConfig.logoSize}%</span>
-    </div>
-  </div>
-)}
-
-              
+                    eyeOuterColor: e.target.value,
+                  }))
+                }
+                className="ml-2"
+              />
+            </label>
+            {/* Logo Upload */}
+            <div className="mb-4">
+              {/* Logo Upload Input */}
+              <label className="block mb-2 font-semibold">Upload Logo:</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      setQrConfig((prev) => ({
+                        ...prev,
+                        logo: reader.result,
+                        logoSize: prev.logoSize || 100, // Increased size for better visibility
+                        logoScale: prev.logoScale || 0.8, // Increased scale for a larger logo
+                        logoMargin: 10, // Increased margin around the logo
+                      }));
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+                className="w-full border p-2 rounded"
+              />
             </div>
-            
-          );
-      
+
+            {/* Logo Size Slider */}
+            {qrConfig.logo && (
+              <div className="mb-4">
+                <label className="block mb-2 font-semibold">Logo Size:</label>
+                <input
+                  type="range"
+                  min="10"
+                  max="100"
+                  step="5"
+                  value={qrConfig.logoSize}
+                  onChange={(e) => {
+                    const newLogoSize = Number(e.target.value);
+                    setQrConfig((prev) => ({
+                      ...prev,
+                      logoSize: newLogoSize,
+                      logoScale: newLogoSize / 500, // Dynamically adjust scale
+                      logoMargin: Math.max(2, 12 - newLogoSize / 10), // Dynamic margin for spacing
+                    }));
+                  }}
+                  className="w-full cursor-pointer"
+                />
+                <div className="text-sm text-gray-600">
+                  Current Logo Size:{" "}
+                  <span className="font-semibold">{qrConfig.logoSize}%</span>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+
       case "effects":
         return (
           <div className="space-y-4">
-
-
             <div className="space-y-2">
               <label className="block">Sticker Type:</label>
               <select
                 value={qrConfig.stickerType}
-                onChange={(e) => setQrConfig((prev) => ({ ...prev, stickerType: e.target.value }))}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
+                    ...prev,
+                    stickerType: e.target.value,
+                  }))
+                }
                 className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
               >
                 <option value="classic">Classic</option>
@@ -3508,7 +3507,12 @@ const QRGenerator = () => {
               <label className="block">Sticker Size:</label>
               <select
                 value={qrConfig.stickerSize}
-                onChange={(e) => setQrConfig((prev) => ({ ...prev, stickerSize: e.target.value }))}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
+                    ...prev,
+                    stickerSize: e.target.value,
+                  }))
+                }
                 className="w-full p-2 rounded-md border border-white bg-gray-700 text-white"
               >
                 <option value="small">Small</option>
@@ -3522,7 +3526,12 @@ const QRGenerator = () => {
               <label className="block">Background Effect:</label>
               <select
                 value={qrConfig.stickerStyle}
-                onChange={(e) => setQrConfig((prev) => ({ ...prev, stickerStyle: e.target.value }))}
+                onChange={(e) =>
+                  setQrConfig((prev) => ({
+                    ...prev,
+                    stickerStyle: e.target.value,
+                  }))
+                }
                 className="w-full p-2 rounded-md border border-gray-600 bg-gray-700 text-white"
               >
                 <option value="none">None</option>
@@ -3554,10 +3563,12 @@ const QRGenerator = () => {
               {Object.entries(presetStyles).map(([key, style]) => (
                 <button
                   key={key}
-                  onClick={() => setQrConfig(prev => ({
-                    ...prev,
-                    ...style.config
-                  }))}
+                  onClick={() =>
+                    setQrConfig((prev) => ({
+                      ...prev,
+                      ...style.config,
+                    }))
+                  }
                   className="relative group overflow-hidden rounded-lg p-4 bg-gray-700 hover:bg-gray-600 transition-all duration-300"
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-blue-500/20 to-purple-500/20 transition-opacity duration-300" />
@@ -3567,9 +3578,18 @@ const QRGenerator = () => {
                       <span className="font-medium">{style.name}</span>
                     </div>
                     <div className="grid grid-cols-3 gap-1">
-                      <div className="w-full h-2 rounded-full" style={{ background: style.config.gradientStart }} />
-                      <div className="w-full h-2 rounded-full" style={{ background: style.config.gradientMiddle }} />
-                      <div className="w-full h-2 rounded-full" style={{ background: style.config.gradientEnd }} />
+                      <div
+                        className="w-full h-2 rounded-full"
+                        style={{ background: style.config.gradientStart }}
+                      />
+                      <div
+                        className="w-full h-2 rounded-full"
+                        style={{ background: style.config.gradientMiddle }}
+                      />
+                      <div
+                        className="w-full h-2 rounded-full"
+                        style={{ background: style.config.gradientEnd }}
+                      />
                     </div>
                   </div>
                 </button>
@@ -3581,10 +3601,12 @@ const QRGenerator = () => {
                 Shape:
                 <select
                   value={qrConfig.shape}
-                  onChange={(e) => setQrConfig(prev => ({
-                    ...prev,
-                    shape: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setQrConfig((prev) => ({
+                      ...prev,
+                      shape: e.target.value,
+                    }))
+                  }
                   className="ml-2 text-sm text-gray-300"
                 >
                   <option value="square">Square</option>
@@ -3593,7 +3615,6 @@ const QRGenerator = () => {
                   <option value="triangle">Triangle</option>
                 </select>
               </label>
-
             </div>
           </div>
         );
@@ -3610,9 +3631,9 @@ const QRGenerator = () => {
                 step="10"
                 value={qrConfig.qrSize}
                 onChange={(e) => {
-                  setQrConfig(prev => ({
+                  setQrConfig((prev) => ({
                     ...prev,
-                    qrSize: Number(e.target.value)
+                    qrSize: Number(e.target.value),
                   }));
                 }}
                 className="w-40"
@@ -3638,17 +3659,12 @@ const QRGenerator = () => {
           </div>
         );
 
-
-        ;
-
       // case "styles":
       //   return renderStylesTab();
       // default:
       //   return null;
-
-    };
-  }
-
+    }
+  };
 
   const getStickerStyle = () => {
     const style = stickerTypes[qrConfig.stickerType];
@@ -3668,18 +3684,17 @@ const QRGenerator = () => {
     };
   };
 
-  
-  const renderPreview = () => (
+  const renderPreview = () =>
     qrConfig.sticker ? (
       <canvas
         ref={previewCanvasRef}
         className="shadow-lg"
         style={{
-          display: 'block', // Ensures the canvas is treated as a block element
-          margin: '0 auto', // Centers horizontally
+          display: "block", // Ensures the canvas is treated as a block element
+          margin: "0 auto", // Centers horizontally
           width: qrConfig.size,
           height: qrConfig.size,
-          backgroundColor: 'white',
+          backgroundColor: "white",
         }}
       />
     ) : (
@@ -3687,435 +3702,621 @@ const QRGenerator = () => {
         ref={canvasRef}
         className="shadow-lg"
         style={{
-          display: 'block', // Ensures the div is treated as a block element
-          margin: '0 auto', // Centers horizontally
+          display: "block", // Ensures the div is treated as a block element
+          margin: "0 auto", // Centers horizontally
           width: qrConfig.size,
           height: qrConfig.size,
-          backgroundColor: 'white', // Background color for the div
+          backgroundColor: "white", // Background color for the div
         }}
       />
-    )
-);
+    );
 
+  // const handleContinue = () => {
+  //   if (url.trim()) {
+  //     setIsUrlEntered(true);
+  //   }
+  // };
 
+  // const handleDownload = () => {
+  //   // Add your QR code download logic here
+  //   console.log("Downloading QR code...");
+  // };
 
+  //pastebin
 
-// const handleContinue = () => {
-//   if (url.trim()) {
-//     setIsUrlEntered(true);
-//   }
-// };
+  // const uploadToGist = async (text) => {
+  //   const githubToken = "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"; // Replace with your GitHub token
+  //   const gistData = {
+  //     description: "QR Code Text Storage",
+  //     public: true,
+  //     files: {
+  //       "long_text.txt": {
+  //         content: text,
+  //       },
+  //     },
+  //   };
 
-// const handleDownload = () => {
-//   // Add your QR code download logic here
-//   console.log("Downloading QR code...");
-// };
+  //   const response = await fetch("https://api.github.com/gists", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${githubToken}`,
+  //     },
+  //     body: JSON.stringify(gistData),
+  //   });
 
-//pastebin
+  //   if (response.ok) {
+  //     const gist = await response.json();
+  //     return gist.html_url; // Returns the Gist URL
+  //   } else {
+  //     throw new Error("Failed to upload text to GitHub Gist");
+  //   }
+  // };
+  const uploadToGist = async (text) => {
+    const githubToken = "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"; // Replace with your GitHub token
 
-// const uploadToGist = async (text) => {
-//   const githubToken = "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"; // Replace with your GitHub token
-//   const gistData = {
-//     description: "QR Code Text Storage",
-//     public: true,
-//     files: {
-//       "long_text.txt": {
-//         content: text,
-//       },
-//     },
-//   };
-
-//   const response = await fetch("https://api.github.com/gists", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${githubToken}`,
-//     },
-//     body: JSON.stringify(gistData),
-//   });
-
-//   if (response.ok) {
-//     const gist = await response.json();
-//     return gist.html_url; // Returns the Gist URL
-//   } else {
-//     throw new Error("Failed to upload text to GitHub Gist");
-//   }
-// };
-const uploadToGist = async (text) => {
-  const githubToken = "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"; // Replace with your GitHub token
-
-  // Gist data
-  const gistData = {
-    description: "QR Code Text Storage",
-    public: true,
-    files: {
-      "long_text.txt": {
-        content: text,
+    // Gist data
+    const gistData = {
+      description: "QR Code Text Storage",
+      public: true,
+      files: {
+        "long_text.txt": {
+          content: text,
+        },
       },
-    },
+    };
+
+    // Fetch request to GitHub Gist API
+    const response = await fetch("https://api.github.com/gists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${githubToken}`, // Correctly set the Authorization header
+      },
+      body: JSON.stringify(gistData),
+    });
+
+    // Handle response
+    if (response.ok) {
+      const gist = await response.json();
+      return gist.html_url; // Return the URL of the newly created Gist
+    } else {
+      const errorDetails = await response.text(); // Capture error response for debugging
+      console.error("Failed to create Gist:", errorDetails);
+      throw new Error(
+        `Failed to upload text to GitHub Gist. Status: ${response.status}`
+      );
+    }
   };
 
-  // Fetch request to GitHub Gist API
-  const response = await fetch("https://api.github.com/gists", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${githubToken}`, // Correctly set the Authorization header
-    },
-    body: JSON.stringify(gistData),
-  });
-
-  // Handle response
-  if (response.ok) {
-    const gist = await response.json();
-    return gist.html_url; // Return the URL of the newly created Gist
-  } else {
-    const errorDetails = await response.text(); // Capture error response for debugging
-    console.error("Failed to create Gist:", errorDetails);
-    throw new Error(`Failed to upload text to GitHub Gist. Status: ${response.status}`);
-  }
-};
-
-const handleSms = () => {
-  const smsUrl = `sms:${smsDetails.number}?body=${encodeURIComponent(smsDetails.message)}`;
-  window.location.href = smsUrl; // This will open the SMS app with the pre-filled number and message
-};
-
-const handleContinue = async () => {
-  try {
-    let dataToEncode = "";
-
-    switch (inputType) {
-      case "text":
-        dataToEncode =
-          textInput.length > 500 ? await uploadToGist(textInput) : textInput;
-        break;
-
-      // case "url":
-      //   dataToEncode = url;
-      //   break;
-      case "url":
-        dataToEncode = `https://haqr.surge.sh?id=${Date.now()}&target=${encodeURIComponent(url)}`;
-        break;
-
-      case "wifi":
-        dataToEncode = `WIFI:S:${wifiDetails.ssid};T:${wifiDetails.encryption};P:${wifiDetails.password};;`;
-        break;
-
-      case "email":
-        dataToEncode = `MAILTO:${emailDetails.address}`;
-        if (emailDetails.subject) {
-          dataToEncode += `?subject=${encodeURIComponent(emailDetails.subject)}`;
-          if (emailDetails.body) {
-            dataToEncode += `&body=${encodeURIComponent(emailDetails.body)}`;
-          }
-        }
-        break;
-
-        case "sms":
-          dataToEncode = `https://haqr.surge.sh?number=${encodeURIComponent(smsDetails.number)}&message=${encodeURIComponent(smsDetails.message)}`;
+  const handleSms = () => {
+    const smsUrl = `sms:${smsDetails.number}?body=${encodeURIComponent(
+      smsDetails.message
+    )}`;
+    window.location.href = smsUrl; // This will open the SMS app with the pre-filled number and message
+  };
+  const handleContinue = async () => {
+    try {
+      let dataToEncode = "";
+  
+      switch (inputType) {
+        case "v-card":
+          dataToEncode = `
+        BEGIN:VCARD
+        VERSION:3.0
+        FN:${encodeURIComponent(vcardDetails.fullName)}
+        ORG:${encodeURIComponent(vcardDetails.organization)}
+        TEL:${encodeURIComponent(vcardDetails.phone)}
+        EMAIL:${encodeURIComponent(vcardDetails.email)}
+        ADR:${encodeURIComponent(vcardDetails.address)}
+        END:VCARD
+          `.trim();
           break;
-
         
-        
-        
-      case "phone":
-        // For dialing, use 'TEL:' URL scheme
-        dataToEncode = `tel:${phoneDetails.number}`;
-        break;
-        
-        
-
-      case "geo":
-        dataToEncode = `geo:${geoDetails.latitude},${geoDetails.longitude}`;
-        break;
-
-      case "calendar":
-        dataToEncode = `
-BEGIN:VEVENT
-SUMMARY:${calendarDetails.summary}
-DTSTART:${calendarDetails.startTime}
-DTEND:${calendarDetails.endTime}
-LOCATION:${calendarDetails.location}
-END:VEVENT`.trim();
-        break;
-
-      default:
-        throw new Error("Unsupported input type");
-    }
-
-    setQrConfig((prev) => ({
-      ...prev,
-      url: dataToEncode,
-    }));
-
-    setIsUrlEntered(true);
-  } catch (error) {
-    alert("Error: " + error.message);
-  }
-};
-
-return (
-  <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
-    <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-center text-indigo-700">
-        QR Code Customizer
-      </h1>
-
-      {!isUrlEntered ? (
-        <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-lg font-semibold mb-4 text-center text-black">
-            Choose Input Type
-          </h2>
-          <div className="flex justify-center space-x-4 mb-4">
-            {["url", "text", "wifi", "email", "phone", "sms", "geo", "calendar"].map((type) => (
-              <button
-                key={type}
-                className={`px-4 py-2 rounded ${
-                  inputType === type ? "bg-indigo-500 text-white" : "bg-gray-200 text-black"
-                }`}
-                onClick={() => setInputType(type)}
-              >
-                {type.toUpperCase()}
-              </button>
-            ))}
-          </div>
-
-          {inputType === "url" && (
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="Enter your URL here"
-              className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-            />
-          )}
-
-          {inputType === "text" && (
-            <textarea
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-              placeholder="Enter your text here"
-              className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-            ></textarea>
-          )}
-
-          {inputType === "wifi" && (
-            <div className="space-y-4">
-              <input
-                type="text"
-                value={wifiDetails.ssid}
-                onChange={(e) => setWifiDetails({ ...wifiDetails, ssid: e.target.value })}
-                placeholder="SSID"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-              <input
-                type="text"
-                value={wifiDetails.password}
-                onChange={(e) => setWifiDetails({ ...wifiDetails, password: e.target.value })}
-                placeholder="Password"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-              <select
-                value={wifiDetails.encryption}
-                onChange={(e) => setWifiDetails({ ...wifiDetails, encryption: e.target.value })}
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              >
-                <option value="WPA">WPA/WPA2</option>
-                <option value="WEP">WEP</option>
-                <option value="">None</option>
-              </select>
-            </div>
-          )}
-
-{inputType === "email" && (
-  <div className="space-y-4">
-    <input
-      type="email"
-      value={emailDetails.address}
-      onChange={(e) =>
-        setEmailDetails({ ...emailDetails, address: e.target.value })
-      }
-      placeholder="Email Address"
-      className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-    />
-    <input
-      type="text"
-      value={emailDetails.subject}
-      onChange={(e) =>
-        setEmailDetails({ ...emailDetails, subject: e.target.value })
-      }
-      placeholder="Subject"
-      className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-    />
-    <textarea
-      value={emailDetails.body}
-      onChange={(e) =>
-        setEmailDetails({ ...emailDetails, body: e.target.value })
-      }
-      placeholder="Message Body"
-      className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-    ></textarea>
-  </div>
-)}
-
-{inputType === "phone" && (
-  <input
-    type="tel"
-    value={phoneDetails.number}
-    onChange={(e) =>
-      setPhoneDetails({ number: e.target.value })
-    }
-    placeholder="Phone Number"
-    className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-  />
-)}
-
-{inputType === "sms" && (
-        <div className="space-y-4">
-          <input
-            type="tel"
-            value={smsDetails.number}
-            onChange={(e) =>
-              setSmsDetails({ ...smsDetails, number: e.target.value })
+  
+        case "text":
+          dataToEncode =
+            textInput.length > 500 ? await uploadToGist(textInput) : textInput;
+          break;
+  
+        case "url":
+          dataToEncode = `https://haqr.surge.sh?id=${Date.now()}&target=${encodeURIComponent(
+            url
+          )}`;
+          break;
+  
+        case "wifi":
+          dataToEncode = `WIFI:S:${wifiDetails.ssid};T:${wifiDetails.encryption};P:${wifiDetails.password};;`;
+          break;
+  
+        case "email":
+          dataToEncode = `MAILTO:${emailDetails.address}`;
+          if (emailDetails.subject) {
+            dataToEncode += `?subject=${encodeURIComponent(
+              emailDetails.subject
+            )}`;
+            if (emailDetails.body) {
+              dataToEncode += `&body=${encodeURIComponent(emailDetails.body)}`;
             }
-            placeholder="Phone Number"
-            className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-          />
-          <textarea
-            value={smsDetails.message}
-            onChange={(e) =>
-              setSmsDetails({ ...smsDetails, message: e.target.value })
-            }
-            placeholder="Message"
-            className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-          ></textarea>
-          <button
-            onClick={handleSendSMS}
-            className="w-full p-4 rounded-lg bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Send SMS
-          </button>
-        </div>
-      )}
-    
+          }
+          break;
+  
+        case "sms":
+          dataToEncode = `https://haqr.surge.sh?number=${encodeURIComponent(
+            smsDetails.number
+          )}&message=${encodeURIComponent(smsDetails.message)}`;
+          break;
+  
+        case "phone":
+          // For dialing, use 'TEL:' URL scheme
+          dataToEncode = `tel:${phoneDetails.number}`;
+          break;
+  
+        case "geo":
+          dataToEncode = `geo:${geoDetails.latitude},${geoDetails.longitude}`;
+          break;
+  
+          case "calendar":
+            dataToEncode = `
+          BEGIN:VEVENT
+          SUMMARY:${encodeURIComponent(calendarDetails.summary)}
+          DTSTART:${encodeURIComponent(calendarDetails.startTime)}
+          DTEND:${encodeURIComponent(calendarDetails.endTime)}
+          LOCATION:${encodeURIComponent(calendarDetails.location)}
+          END:VEVENT`.trim();
+            break;
+          
+  
+        case "upi":
+          dataToEncode = `upi://pay?pa=${encodeURIComponent(
+            upiDetails.vpa
+          )}&pn=${encodeURIComponent(upiDetails.payeeName)}&cu=${
+            upiDetails.currency
+          }&am=${upiDetails.amount}&tn=${encodeURIComponent(
+            upiDetails.remark
+          )}`;
+          break;
+  
+        default:
+          throw new Error("Unsupported input type");
+      }
+  
+      setQrConfig((prev) => ({
+        ...prev,
+        url: dataToEncode,
+      }));
+  
+      setIsUrlEntered(true);
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  };
+  
 
+  return (
+    <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center text-indigo-700">
+          QR Code Customizer
+        </h1>
 
-
-          {inputType === "geo" && (
-            <div className="space-y-4">
-              <input
-                type="text"
-                value={geoDetails.latitude}
-                onChange={(e) => setGeoDetails({ ...geoDetails, latitude: e.target.value })}
-                placeholder="Latitude"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-              <input
-                type="text"
-                value={geoDetails.longitude}
-                onChange={(e) => setGeoDetails({ ...geoDetails, longitude: e.target.value })}
-                placeholder="Longitude"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-            </div>
-          )}
-
-          {inputType === "calendar" && (
-            <div className="space-y-4">
-              <input
-                type="text"
-                value={calendarDetails.summary}
-                onChange={(e) => setCalendarDetails({ ...calendarDetails, summary: e.target.value })}
-                placeholder="Event Summary"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-              <input
-                type="datetime-local"
-                value={calendarDetails.startTime}
-                onChange={(e) => setCalendarDetails({ ...calendarDetails, startTime: e.target.value })}
-                placeholder="Start Time"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-              <input
-                type="datetime-local"
-                value={calendarDetails.endTime}
-                onChange={(e) => setCalendarDetails({ ...calendarDetails, endTime: e.target.value })}
-                placeholder="End Time"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-              <input
-                type="text"
-                value={calendarDetails.location}
-                onChange={(e) => setCalendarDetails({ ...calendarDetails, location: e.target.value })}
-                placeholder="Location"
-                className="w-full p-4 rounded-lg border-2 border-gray-300"
-              />
-            </div>
-          )}
-
-          <button
-            onClick={handleContinue}
-            className="mt-4 w-full bg-indigo-500 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 shadow-md"
-          >
-            Continue
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {!isUrlEntered ? (
           <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
-            <div className="mb-4">
-              <p className="text-base font-medium italic text-black">
-                Custom QR Code Generator
-              </p>
-            </div>
-            <div className="mb-6">
-              <div className="flex border-b-2 border-gray-200 mb-6 overflow-x-auto">
-                {["Basic", "Styles", "Design", "Eyes", "Effects", "Stickers", "Shapes"].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab.toLowerCase())}
-                    className={`px-6 py-3 text-base font-semibold transition-colors duration-300 ${
-                      activeTab === tab.toLowerCase()
-                        ? "border-b-4 border-indigo-500 text-indigo-500"
-                        : "text-gray-500 hover:text-gray-700"
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-              {renderTabContent()}
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white p-8 shadow-lg">
-            <h2 className="text-m font-semibold mb-4 text-center text-black">
-              Preview
+            <h2 className="text-lg font-semibold mb-4 text-center text-black">
+              Choose Input Type
             </h2>
-            {renderPreview()}
-            <div className="mt-4 text-center text-sm text-black">
-              <p>Scan to test the QR code</p>
-              {url && (
-                <p className="mt-2">
-                  URL: <span className="text-indigo-200">{url}</span>
-                </p>
-              )}
+            <div className="flex justify-center space-x-4 mb-4">
+              {[
+                "url",
+                "text",
+                "wifi",
+                "email",
+                "phone",
+                "sms",
+                "geo",
+                "calendar",
+                "upi",
+                "v-card",
+              ].map((type) => (
+                <button
+                  key={type}
+                  className={`px-4 py-2 rounded ${
+                    inputType === type
+                      ? "bg-indigo-500 text-white"
+                      : "bg-gray-200 text-black"
+                  }`}
+                  onClick={() => setInputType(type)}
+                >
+                  {type.toUpperCase()}
+                </button>
+              ))}
             </div>
+
+            {inputType === "url" && (
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="Enter your URL here"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              />
+            )}
+
+            {inputType === "text" && (
+              <textarea
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder="Enter your text here"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              ></textarea>
+            )}
+
+            {inputType === "wifi" && (
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={wifiDetails.ssid}
+                  onChange={(e) =>
+                    setWifiDetails({ ...wifiDetails, ssid: e.target.value })
+                  }
+                  placeholder="SSID"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={wifiDetails.password}
+                  onChange={(e) =>
+                    setWifiDetails({ ...wifiDetails, password: e.target.value })
+                  }
+                  placeholder="Password"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <select
+                  value={wifiDetails.encryption}
+                  onChange={(e) =>
+                    setWifiDetails({
+                      ...wifiDetails,
+                      encryption: e.target.value,
+                    })
+                  }
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                >
+                  <option value="WPA">WPA/WPA2</option>
+                  <option value="WEP">WEP</option>
+                  <option value="">None</option>
+                </select>
+              </div>
+            )}
+
+            {inputType === "email" && (
+              <div className="space-y-4">
+                <input
+                  type="email"
+                  value={emailDetails.address}
+                  onChange={(e) =>
+                    setEmailDetails({
+                      ...emailDetails,
+                      address: e.target.value,
+                    })
+                  }
+                  placeholder="Email Address"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                />
+                <input
+                  type="text"
+                  value={emailDetails.subject}
+                  onChange={(e) =>
+                    setEmailDetails({
+                      ...emailDetails,
+                      subject: e.target.value,
+                    })
+                  }
+                  placeholder="Subject"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                />
+                <textarea
+                  value={emailDetails.body}
+                  onChange={(e) =>
+                    setEmailDetails({ ...emailDetails, body: e.target.value })
+                  }
+                  placeholder="Message Body"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                ></textarea>
+              </div>
+            )}
+
+            {inputType === "phone" && (
+              <input
+                type="tel"
+                value={phoneDetails.number}
+                onChange={(e) => setPhoneDetails({ number: e.target.value })}
+                placeholder="Phone Number"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              />
+            )}
+
+            {inputType === "sms" && (
+              <div className="space-y-4">
+                <input
+                  type="tel"
+                  value={smsDetails.number}
+                  onChange={(e) =>
+                    setSmsDetails({ ...smsDetails, number: e.target.value })
+                  }
+                  placeholder="Phone Number"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                />
+                <textarea
+                  value={smsDetails.message}
+                  onChange={(e) =>
+                    setSmsDetails({ ...smsDetails, message: e.target.value })
+                  }
+                  placeholder="Message"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+                ></textarea>
+                <button
+                  onClick={handleSendSMS}
+                  className="w-full p-4 rounded-lg bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  Send SMS
+                </button>
+              </div>
+            )}
+
+            {inputType === "geo" && (
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={geoDetails.latitude}
+                  onChange={(e) =>
+                    setGeoDetails({ ...geoDetails, latitude: e.target.value })
+                  }
+                  placeholder="Latitude"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={geoDetails.longitude}
+                  onChange={(e) =>
+                    setGeoDetails({ ...geoDetails, longitude: e.target.value })
+                  }
+                  placeholder="Longitude"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+              </div>
+            )}
+
+            {inputType === "calendar" && (
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={calendarDetails.summary}
+                  onChange={(e) =>
+                    setCalendarDetails({
+                      ...calendarDetails,
+                      summary: e.target.value,
+                    })
+                  }
+                  placeholder="Event Summary"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="datetime-local"
+                  value={calendarDetails.startTime}
+                  onChange={(e) =>
+                    setCalendarDetails({
+                      ...calendarDetails,
+                      startTime: e.target.value,
+                    })
+                  }
+                  placeholder="Start Time"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="datetime-local"
+                  value={calendarDetails.endTime}
+                  onChange={(e) =>
+                    setCalendarDetails({
+                      ...calendarDetails,
+                      endTime: e.target.value,
+                    })
+                  }
+                  placeholder="End Time"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={calendarDetails.location}
+                  onChange={(e) =>
+                    setCalendarDetails({
+                      ...calendarDetails,
+                      location: e.target.value,
+                    })
+                  }
+                  placeholder="Location"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+              </div>
+            )}
+            {inputType === "upi" && (
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={upiDetails.vpa}
+                  onChange={(e) =>
+                    setUpiDetails({ ...upiDetails, vpa: e.target.value })
+                  }
+                  placeholder="UPI ID / VPA"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={upiDetails.payeeName}
+                  onChange={(e) =>
+                    setUpiDetails({ ...upiDetails, payeeName: e.target.value })
+                  }
+                  placeholder="Payee Name"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <select
+                  value={upiDetails.currency}
+                  onChange={(e) =>
+                    setUpiDetails({ ...upiDetails, currency: e.target.value })
+                  }
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                >
+                  <option value="INR">INR</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  {/* Add more currencies as needed */}
+                </select>
+                <input
+                  type="number"
+                  value={upiDetails.amount}
+                  onChange={(e) =>
+                    setUpiDetails({ ...upiDetails, amount: e.target.value })
+                  }
+                  placeholder="Amount"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={upiDetails.remark}
+                  onChange={(e) =>
+                    setUpiDetails({ ...upiDetails, remark: e.target.value })
+                  }
+                  placeholder="Transaction Remark"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+              </div>
+            )}
+            {inputType === "v-card" && (
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={vcardDetails.fullName}
+                  onChange={(e) =>
+                    setVcardDetails({
+                      ...vcardDetails,
+                      fullName: e.target.value,
+                    })
+                  }
+                  placeholder="Full Name"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={vcardDetails.organization}
+                  onChange={(e) =>
+                    setVcardDetails({
+                      ...vcardDetails,
+                      organization: e.target.value,
+                    })
+                  }
+                  placeholder="Organization"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={vcardDetails.phone}
+                  onChange={(e) =>
+                    setVcardDetails({ ...vcardDetails, phone: e.target.value })
+                  }
+                  placeholder="Phone Number"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="email"
+                  value={vcardDetails.email}
+                  onChange={(e) =>
+                    setVcardDetails({ ...vcardDetails, email: e.target.value })
+                  }
+                  placeholder="Email Address"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+                <input
+                  type="text"
+                  value={vcardDetails.address}
+                  onChange={(e) =>
+                    setVcardDetails({
+                      ...vcardDetails,
+                      address: e.target.value,
+                    })
+                  }
+                  placeholder="Address"
+                  className="w-full p-4 rounded-lg border-2 border-gray-300"
+                />
+              </div>
+            )}
+
             <button
-              onClick={handleDownload}
-              className="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
+              onClick={handleContinue}
+              className="mt-4 w-full bg-indigo-500 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 shadow-md"
             >
-              Download QR Code
+              Continue
             </button>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
+              <div className="mb-4">
+                <p className="text-base font-medium italic text-black">
+                  Custom QR Code Generator
+                </p>
+              </div>
+              <div className="mb-6">
+                <div className="flex border-b-2 border-gray-200 mb-6 overflow-x-auto">
+                  {[
+                    "Basic",
+                    "Styles",
+                    "Design",
+                    "Eyes",
+                    "Effects",
+                    "Stickers",
+                    "Shapes",
+                  ].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab.toLowerCase())}
+                      className={`px-6 py-3 text-base font-semibold transition-colors duration-300 ${
+                        activeTab === tab.toLowerCase()
+                          ? "border-b-4 border-indigo-500 text-indigo-500"
+                          : "text-gray-500 hover:text-gray-700"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+                {renderTabContent()}
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white p-8 shadow-lg">
+              <h2 className="text-m font-semibold mb-4 text-center text-black">
+                Preview
+              </h2>
+              {renderPreview()}
+              <div className="mt-4 text-center text-sm text-black">
+                <p>Scan to test the QR code</p>
+                {url && (
+                  <p className="mt-2">
+                    URL: <span className="text-indigo-200">{url}</span>
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={handleDownload}
+                className="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
+              >
+                Download QR Code
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 };
 
 export default QRGenerator;
-
-
