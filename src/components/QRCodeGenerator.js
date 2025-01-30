@@ -2006,6 +2006,17 @@ import { Sparkles } from "lucide-react";
 import QRCode from "react-qr-code";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
+import { 
+  Facebook, 
+  Twitter, 
+  Instagram, 
+  Linkedin, 
+  Github, 
+  Youtube,
+  Globe,
+  Plus,
+  Minus
+} from 'lucide-react';
 
 const QRGenerator = () => {
   const qrCode = useRef(null);
@@ -2019,6 +2030,34 @@ const QRGenerator = () => {
     password: "",
     encryption: "WPA",
   });
+  const [socialLinks, setSocialLinks] = useState([
+    { platform: 'Facebook', url: 'https://facebook.com' },
+    { platform: 'Instagram', url: 'https://instagram.com' },
+    { platform: 'Twitter', url: 'https://twitter.com' },
+    { platform: 'LinkedIn', url: 'https://linkedin.com' },
+    { platform: 'YouTube', url: 'https://youtube.com' },
+  ]);
+  const handleChange = (index, event) => {
+    const values = [...socialLinks];
+    values[index][event.target.name] = event.target.value;
+    setSocialLinks(values);
+  };
+
+  const handleAddLink = () => {
+    setSocialLinks([...socialLinks, { platform: '', url: '' }]);
+  };
+
+  const handleRemoveLink = (index) => {
+    const values = [...socialLinks];
+    values.splice(index, 1);
+    setSocialLinks(values);
+  };
+
+  const handleSubmit = () => {
+    // Handle QR code generation here, using the socialLinks state
+    console.log(socialLinks);
+  };
+  
   const [textInput, setTextInput] = useState("");
   const [qrShape, setQrShape] = useState("square");
   const [selectedStyle, setSelectedStyle] = useState("neonGlow");
@@ -2041,6 +2080,10 @@ const QRGenerator = () => {
     amount: "",
     remark: "",
   });
+  
+
+
+   
   // Separate state for logo size
 
   const handleSendSMS = () => {
@@ -3802,16 +3845,17 @@ const QRGenerator = () => {
       switch (inputType) {
         case "v-card":
           dataToEncode = `
-        BEGIN:VCARD
-        VERSION:3.0
-        FN:${encodeURIComponent(vcardDetails.fullName)}
-        ORG:${encodeURIComponent(vcardDetails.organization)}
-        TEL:${encodeURIComponent(vcardDetails.phone)}
-        EMAIL:${encodeURIComponent(vcardDetails.email)}
-        ADR:${encodeURIComponent(vcardDetails.address)}
-        END:VCARD
+            BEGIN:VCARD
+            VERSION:3.0
+            FN:${encodeURIComponent(vcardDetails.fullName)}
+            ORG:${encodeURIComponent(vcardDetails.organization)}
+            TEL:${encodeURIComponent(vcardDetails.phone)}
+            EMAIL:${encodeURIComponent(vcardDetails.email)}
+            ADR:${encodeURIComponent(vcardDetails.address)}
+            END:VCARD
           `.trim();
           break;
+        
         
   
         case "text":
@@ -3876,6 +3920,33 @@ const QRGenerator = () => {
             upiDetails.remark
           )}`;
           break;
+          case "social":
+            const formattedLinks = socialLinks
+              .filter(link => link.platform && link.url)
+              .map(link => {
+                switch (link.platform) {
+                  case "Facebook":
+                    return `https://www.facebook.com/${encodeURIComponent(link.url)}`;
+                  case "Twitter":
+                    return `https://twitter.com/${encodeURIComponent(link.url)}`;
+                  case "Instagram":
+                    return `https://www.instagram.com/${encodeURIComponent(link.url)}`;
+                  case "LinkedIn":
+                    return `https://www.linkedin.com/${encodeURIComponent(link.url)}`;
+                  case "GitHub":
+                    return `https://github.com/${encodeURIComponent(link.url)}`;
+                  case "YouTube":
+                    return `https://www.youtube.com/watch?v=${encodeURIComponent(link.url)}`;  // Direct YouTube URL
+                  case "Website":
+                    return `https://${encodeURIComponent(link.url)}`;
+                  default:
+                    return `${link.platform.toLowerCase()}:${encodeURIComponent(link.url)}`;
+                }
+              })
+              .join("\n");
+            dataToEncode = formattedLinks;
+            break;
+          
   
         default:
           throw new Error("Unsupported input type");
@@ -3891,6 +3962,8 @@ const QRGenerator = () => {
       alert("Error: " + error.message);
     }
   };
+
+
   
 
   return (
@@ -3917,6 +3990,7 @@ const QRGenerator = () => {
                 "calendar",
                 "upi",
                 "v-card",
+                "social",
               ].map((type) => (
                 <button
                   key={type}
@@ -4166,8 +4240,7 @@ const QRGenerator = () => {
                   className="w-full p-4 rounded-lg border-2 border-gray-300"
                 >
                   <option value="INR">INR</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
+
                   {/* Add more currencies as needed */}
                 </select>
                 <input
@@ -4248,6 +4321,51 @@ const QRGenerator = () => {
                 />
               </div>
             )}
+               <div>
+      {inputType === "social" && (
+        <div className="space-y-4">
+          {socialLinks.map((link, index) => (
+            <div key={index} className="space-y-2">
+              <input
+                type="text"
+                name="platform"
+                value={link.platform}
+                onChange={(e) => handleChange(index, e)}
+                placeholder="Platform"
+                className="w-full p-4 rounded-lg border-2 border-gray-300"
+              />
+              <input
+                type="url"
+                name="url"
+                value={link.url}
+                onChange={(e) => handleChange(index, e)}
+                placeholder="URL"
+                className="w-full p-4 rounded-lg border-2 border-gray-300"
+              />
+              <button
+                onClick={() => handleRemoveLink(index)}
+                className="text-red-500 border-2 border-red-500 p-2 rounded-lg"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={handleAddLink}
+            className="bg-blue-500 text-white p-2 rounded-lg"
+          >
+            Add Another Link
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="bg-green-500 text-white p-2 rounded-lg"
+          >
+            Generate QR Code
+          </button>
+        </div>
+      )}
+    </div>
+            
 
             <button
               onClick={handleContinue}
