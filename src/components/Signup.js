@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { auth, provider } from "./firebase"; // Ensure proper Firebase setup
+import { auth, provider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
-import BufferLoader from "./BufferLoader"; // Replace with your loading spinner component or remove if not available
-import { useNavigate } from "react-router-dom"; // Importing useNavigate to redirect
+import BufferLoader from "../pages/BufferLoader";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = ({ onGoogleSignIn }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize navigate to redirect
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -15,18 +15,22 @@ const SignUpPage = ({ onGoogleSignIn }) => {
 
     try {
       const result = await signInWithPopup(auth, provider);
+      if (!result.user) throw new Error("No user returned from Google Sign-In");
+
       const user = result.user;
-      onGoogleSignIn(user);
+      console.log("User signed in:", user);
+
+      if (onGoogleSignIn) {
+        onGoogleSignIn(user);
+      }
+
+      navigate("/dashboard"); // ✅ Redirect only after successful login
     } catch (error) {
-      console.error("Error with Google Sign-In:", error);
+      console.error("Google Sign-In Error:", error);
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleClose = () => {
-    navigate("/"); // Redirect to the Home page
   };
 
   return (
@@ -42,10 +46,9 @@ const SignUpPage = ({ onGoogleSignIn }) => {
         {/* White Section */}
         <div className="w-2/3 bg-white flex items-center justify-center p-8 rounded-r-lg">
           <div className="w-full max-w-md">
-            <h3 className="text-2xl font-semibold text-center mb-4">Sign Up</h3>
-            <p className="text-sm text-center mb-4">
-              To continue, it's completely{" "}
-              <span className="text-blue-500">free!</span>
+            <h3 className="text-2xl font-semibold text-center mb-4">Please Sign In to Continue</h3>
+            <p className="text-center mb-4 text-sm text-gray-600">
+              Don’t have an account yet? Sign up quickly with your Google account.
             </p>
             <button
               type="button"
@@ -70,24 +73,18 @@ const SignUpPage = ({ onGoogleSignIn }) => {
               </div>
             )}
             <div className="mt-6 text-center">
-              Already have an account?{" "}
-              <span
-                className="text-indigo-600 font-medium cursor-pointer"
-                onClick={handleGoogleSignIn}
-              >
-                Log in
-              </span>
+              <p className="text-sm text-gray-500">
+                Already have an account?{" "}
+                <span
+                  className="text-indigo-600 font-medium cursor-pointer"
+                  onClick={() => navigate("/login")}
+                >
+                  Log in here
+                </span>
+              </p>
             </div>
           </div>
         </div>
-
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          className="absolute top-4 right-4 text-gray-700 text-2xl hover:text-gray-900 transition"
-        >
-          ✖
-        </button>
       </div>
     </div>
   );

@@ -1,40 +1,25 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import QrCode from './pages/QrCode';
-import AnalyticsPage from './pages/AnalyticsPage'; // Updated import
-import Signup from './pages/Signup';
-import QRCodeGenerator from './components/QRCodeGenerator';
-import PremiumPage from './components/PurschasePlans';
-
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import QrCode from "./pages/QrCode";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import Signup from "./components/Signup";
+import QRCodeGenerator from "./components/QRCodeGenerator";
+import PremiumPage from "./components/PurschasePlans";
+import Dashboard from "./pages/Dashboard"; // Import Dashboard
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
-      {
-        path: "/",
-        element: <Home/>,
-      },
-      {
-        path: "/qr-code",
-        element: <QRCodeGenerator />,
-      },
-      {
-        path: "/analytics",
-        element: <AnalyticsPage />, // Ensure AnalyticsPage fetches analytics data
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
-        path: "/pricing",
-        element: <PremiumPage />, // Ensure PremiumPage displays the purchase plans
-      },
-      // Add a route for /sms that will serve the sms.js file from public directory
+      { path: "/", element: <Home /> },
+      { path: "/qr-code", element: <QRCodeGenerator /> },
+      { path: "/analytics", element: <AnalyticsPage /> },
+      { path: "/signup", element: <Signup /> },
+      { path: "/pricing", element: <PremiumPage /> },
+      { path: "/dashboard", element: <Dashboard /> }, // ✅ Added Dashboard Route
       {
         path: "/sms",
         element: (

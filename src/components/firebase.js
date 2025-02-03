@@ -1,8 +1,6 @@
-// firebase.js
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDMYh_mMapVvqGh7_wU_b4uiHkOYbsVTeU",
   authDomain: "qr-web-490ea.firebaseapp.com",
@@ -13,9 +11,11 @@ const firebaseConfig = {
   measurementId: "G-56M5SZX4BM"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+// Ensure popup works without errors
+provider.setCustomParameters({ prompt: "select_account" });
 
 export { auth, provider };
