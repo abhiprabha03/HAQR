@@ -24,7 +24,7 @@ const SignUpPage = ({ onGoogleSignIn }) => {
         onGoogleSignIn(user);
       }
 
-      navigate("/dashboard"); // ✅ Redirect only after successful login
+      navigate("/dashboard"); // ✅ Redirect after successful login
     } catch (error) {
       console.error("Google Sign-In Error:", error);
       setError(error.message);
@@ -36,6 +36,16 @@ const SignUpPage = ({ onGoogleSignIn }) => {
   return (
     <div className="min-h-screen bg-gray-900 flex items-start justify-center py-8">
       <div className="w-full max-w-2xl h-[600px] flex rounded-lg shadow-lg relative bg-white">
+        
+        {/* ❌ Close Button */}
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition"
+          aria-label="Close"
+        >
+          ✖
+        </button>
+
         {/* Blue Section */}
         <div className="w-1/3 bg-gradient-to-r from-indigo-400 to-blue-400 text-white flex flex-col items-center justify-center p-8 rounded-l-lg">
           <h2 className="text-3xl font-bold">Welcome to HAQR</h2>

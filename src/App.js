@@ -7,7 +7,8 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import Signup from "./components/Signup";
 import QRCodeGenerator from "./components/QRCodeGenerator";
 import PremiumPage from "./components/PurschasePlans";
-import Dashboard from "./pages/Dashboard"; // Import Dashboard
+import Dashboard from "./pages/Dashboard";
+import Login from "./components/LoginPage"; // ✅ Import Login Page
 
 const router = createBrowserRouter([
   {
@@ -18,22 +19,13 @@ const router = createBrowserRouter([
       { path: "/qr-code", element: <QRCodeGenerator /> },
       { path: "/analytics", element: <AnalyticsPage /> },
       { path: "/signup", element: <Signup /> },
+      { path: "/login", element: <Login /> }, // ✅ Login Page Route
       { path: "/pricing", element: <PremiumPage /> },
-      { path: "/dashboard", element: <Dashboard /> }, // ✅ Added Dashboard Route
-      {
-        path: "/sms",
-        element: (
-          <div>
-            <h1>Send SMS</h1>
-            <script src="/sms.js"></script>
-          </div>
-        ),
-      },
+      { path: "/dashboard", element: <Dashboard /> }, 
     ],
   },
 ]);
 
-// Main App component rendering RouterProvider with the defined router
 function App() {
   return <RouterProvider router={router} />;
 }
