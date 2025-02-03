@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -9,6 +9,7 @@ import QRCodeGenerator from './components/QRCodeGenerator';
 
 const router = createBrowserRouter([
   {
+    
     path: "/",
     element: <Layout/>,
     children: [

@@ -5,11 +5,14 @@ import { Sparkles } from 'lucide-react';
 import QRCode from "react-qr-code";
 import ReactDOM from 'react-dom';
 import { useNavigate } from "react-router-dom";
+import { auth } from "./firebase";  // ✅ Ensure this file exports `auth`
+import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 
 const QRGenerator = () => {
   const qrCode = useRef(null);
   const navigate = useNavigate();
   const previewCanvasRef = useRef(null);
+  const [analyticsData, setAnalyticsData] = useState(null);
   const [url, setUrl] = useState(""); // Manages the URL input
   const [isUrlEntered, setIsUrlEntered] = useState(false);
   const [activeTab, setActiveTab] = useState("basic");
@@ -182,7 +185,14 @@ const QRGenerator = () => {
     )
   };
 
-
+  const generateUniqueQrUrl = () => {
+    const uniqueId = Math.random().toString(36).substring(2, 10); // Generate a random ID
+    return `https://qrcodeinc.vercel.app/landing-page?id=${uniqueId}`;
+  };
+  
+  // Example usage:
+  const qrCodeUrl = generateUniqueQrUrl();
+  
 
   useEffect(() => {
     const patternConfig = patternConfigs[selectedPattern] || patternConfigs.default;
@@ -690,7 +700,8 @@ const QRGenerator = () => {
     img.src = stickerPath;
   };
 
-
+  //firebase 
+  
   const updatePreview = () => {
     if (!previewCanvasRef.current) return;
 
@@ -973,73 +984,233 @@ const QRGenerator = () => {
       updatePreview();
     }
   }, [qrConfig]);
+//ana;ytics
+  // const handleAnalyticsOption = async () => {
+  //   const userConfirmation = window.confirm(
+  //     "Do you want to enable analytics for this QR Code? This will mask the URL and track clicks."
+  //   );
 
-  const handleAnalyticsOption = async () => {
-    const userConfirmation = window.confirm(
-      "Do you want to enable analytics for this QR Code? This will mask the URL and track clicks."
-    );
-  
-    if (userConfirmation) {
-      try {
-        const maskedUrl = await generateMaskedUrl(qrConfig.url);
-        setQrConfig((prev) => ({ ...prev, url: maskedUrl }));
-        await saveQrCodeWithAnalytics(maskedUrl);
-        alert("Analytics enabled. QR code URL is masked and tracking is active.");
-      } catch (error) {
-        console.error("Error enabling analytics:", error);
-        alert("Failed to enable analytics. Please try again.");
-      }
-    } else {
-      alert("Analytics not enabled.");
+  //   if (userConfirmation) {
+  //     try {
+  //       const maskedUrl = await generateMaskedUrl(qrConfig.url); // Generate the masked URL
+  //       setQrConfig((prev) => ({ ...prev, url: maskedUrl })); // Update QR code with masked URL
+  //       await saveQrCodeWithAnalytics(maskedUrl); // Save masked URL with analytics
+  //       alert("Analytics enabled. QR code URL is masked and tracking is active.");
+  //     } catch (error) {
+  //       console.error("Error enabling analytics:", error);
+  //       alert("Failed to enable analytics. Please try again.");
+  //     }
+  //   } else {
+  //     alert("Analytics not enabled.");
+  //   }
+  // };
+
+
+  const fetchAnalytics = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Please sign in first!");
+      return;
     }
-  };
   
-  const generateMaskedUrl = async (originalUrl) => {
     try {
-      const response = await fetch("http://localhost:3000/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ originalUrl }),
+      const token = await user.getIdToken();
+      const response = await fetch("http://localhost:3000/analytics-summary", {
+        headers: { Authorization: `Bearer ${token}` },
       });
   
       const data = await response.json();
-      return data.maskedUrl; // The masked URL returned by your server
+      console.log("Analytics:", data);
+  
+      // Display the analytics data without locations
+      data.forEach((qr) => {
+        console.log(`QR Code: ${qr.maskedUrl}`);
+        console.log(`Original URL: ${qr.originalUrl}`);
+        console.log(`Clicks: ${qr.clicks}`);
+        // Removed locations from display
+      });
+    } catch (error) {
+      console.error("Error fetching analytics:", error.message);
+    }
+  };
+
+  
+
+  const generateMaskedUrl = async (originalUrl) => {
+    try {
+      const response = await fetch("https://back-1-3fru.onrender.com/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ originalUrl, userId: "yourUserIdHere" }), // Include userId
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate masked URL");
+      }
+
+      const data = await response.json();
+      return data.maskedUrl; // Return the masked URL from server response
     } catch (error) {
       console.error("Error generating masked URL:", error);
       throw new Error("Could not generate masked URL");
     }
   };
-  
+
   const saveQrCodeWithAnalytics = async (maskedUrl) => {
     try {
-      await fetch("http://localhost:3000/save-qr", { // Adjust API URL to match your backend
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Please sign in first!");
+        return;
+      }
+  
+      const token = await user.getIdToken();
+      const response = await fetch("http://localhost:3000/save-accounts", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: maskedUrl, config: qrConfig }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId: user.uid,
+          accounts: { url: maskedUrl, config: qrConfig }, // Include URL and configuration
+        }),
       });
+  
+      if (!response.ok) {
+        throw new Error("Failed to save QR code analytics");
+      }
     } catch (error) {
       console.error("Error saving QR code analytics:", error);
       throw new Error("Could not save QR code with analytics");
     }
   };
   
-  const handleGenerateQrCode = async () => {
+  const handleLogin = async () => {
     try {
-      const maskedUrl = await generateMaskedUrl(qrConfig.url);
-      setQrConfig((prev) => ({
-        ...prev,
-        url: maskedUrl, // Update QR code configuration with the masked URL
-      }));
-      alert("Masked URL generated and QR code updated for tracking.");
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      console.log("User logged in:", result.user);
     } catch (error) {
-      console.error("Error generating QR code:", error);
-      alert("Failed to generate QR code. Please try again.");
+      console.error("Login failed:", error.message);
     }
   };
   
+  //loading
+  // const handleGenerateQrCode = async () => {
+  //   setIsProcessing(true);  // Show loading state
+  
+  //   try {
+  //     const maskedUrl = await generateMaskedUrl(qrConfig.url); 
+  //     setQrConfig((prev) => ({
+  //       ...prev,
+  //       url: maskedUrl,
+  //     }));
+  
+  //     qrCode.current = null; // Reset QR code instance
+  //   } catch (error) {
+  //     alert("Error generating QR code");
+  //   } finally {
+  //     setIsProcessing(false);
+  //   }
+  // };
+  const handleGenerateQrCode = async () => {
+    if (!auth.currentUser) {
+      alert("Please sign in first!");
+      return;
+    }
+  
+    setIsProcessing(true);  // Show loading state
+  
+    try {
+      const maskedUrl = await generateMaskedUrl(qrConfig.url); 
+      setQrConfig((prev) => ({
+        ...prev,
+        url: maskedUrl,
+      }));
+  
+      qrCode.current = null; // Reset QR code instance
+    } catch (error) {
+      alert("Error generating QR code");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  
+  
+  // const generateQrCode = async () => {
+  //   const user = auth.currentUser;
+  //   if (!user) {
+  //     alert("Please sign in first!");
+  //     return;
+  //   }
+  
+  //   const token = await user.getIdToken();
+  //   const response = await fetch("http://localhost:3000/generate", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     body: JSON.stringify({ originalUrl: qrConfig.url }),
+  //   });
+  
+  //   const data = await response.json();
+  //   setQrConfig((prev) => ({ ...prev, url: data.maskedUrl }));
+  // };
+  const generateQrCode = async () => {
+    if (!auth.currentUser) {
+      alert("Please sign in first!");
+      return;
+    }
+  
+    try {
+      const user = auth.currentUser;
+      const token = await user.getIdToken(true); // Force refresh token in case of expiry
+  
+      const response = await fetch("http://localhost:3000/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ originalUrl: qrConfig.url }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} - ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      if (data.maskedUrl) {
+        setQrConfig((prev) => ({ ...prev, url: data.maskedUrl }));
+      } else {
+        throw new Error("Invalid response from server.");
+      }
+    } catch (error) {
+      console.error("Error generating QR code:", error);
+      alert(`Error generating QR code: ${error.message}`);
+    }
+  };
+  
+  
+  // const handleGenerateQrCode = async () => {
+  //   try {
+  //     const maskedUrl = await generateMaskedUrl(qrConfig.url); // Generate the masked URL
+  //     setQrConfig((prev) => ({
+  //       ...prev,
+  //       url: maskedUrl, // Update QR code configuration with the masked URL
+  //     }));
+  //     alert("Masked URL generated and QR code updated for tracking.");
+  //   } catch (error) {
+  //     console.error("Error generating QR code:", error);
+  //     alert("Failed to generate QR code. Please try again.");
+  //   }
+  // };
+  
   const handleDownload = async () => {
     try {
-      await handleAnalyticsOption(); // Prompt user for analytics
+      await fetchAnalytics(); // Prompt user for analytics
       if (qrConfig.sticker && previewCanvasRef.current) {
         // Download custom QR code with sticker
         const link = document.createElement("a");
@@ -1090,7 +1261,7 @@ const QRGenerator = () => {
       }
     };
 
-
+   
 
     const handlePatternChange = (pattern) => {
       setQrConfig((prev) => ({
@@ -1102,6 +1273,8 @@ const QRGenerator = () => {
 
     return (
       <div className="space-y-6">
+        
+
         {/* Shape Selection */}
         <div className="space-y-3">
           <h3 className="text-sm font-medium text-black">Shape</h3>
@@ -1724,8 +1897,11 @@ const handleContinue = async () => {
           textInput.length > 500 ? await uploadToGist(textInput) : textInput;
         break;
 
+      // case "url":
+      //   dataToEncode = url;
+      //   break;
       case "url":
-        dataToEncode = url;
+        dataToEncode = `https://haqr.surge.sh?id=${Date.now()}&target=${encodeURIComponent(url)}`;
         break;
 
       case "wifi":
@@ -1785,15 +1961,292 @@ END:VEVENT`.trim();
   }
 };
 
+// return (
+//   <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
+//     <div className="max-w-7xl mx-auto">
+//       <h1 className="text-3xl font-bold mb-8 text-center text-indigo-700">
+//         QR Code Customizer
+//       </h1>
+
+//       {!isUrlEntered ? (
+//         <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
+//           <h2 className="text-lg font-semibold mb-4 text-center text-black">
+//             Choose Input Type
+//           </h2>
+//           <div className="flex justify-center space-x-4 mb-4">
+//             {["url", "text", "wifi", "email", "phone", "sms", "geo", "calendar"].map((type) => (
+//               <button
+//                 key={type}
+//                 className={`px-4 py-2 rounded ${
+//                   inputType === type ? "bg-indigo-500 text-white" : "bg-gray-200 text-black"
+//                 }`}
+//                 onClick={() => setInputType(type)}
+//               >
+//                 {type.toUpperCase()}
+//               </button>
+//             ))}
+//           </div>
+
+//           {inputType === "url" && (
+//             <input
+//               type="text"
+//               value={url}
+//               onChange={(e) => setUrl(e.target.value)}
+//               placeholder="Enter your URL here"
+//               className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//             />
+//           )}
+
+//           {inputType === "text" && (
+//             <textarea
+//               value={textInput}
+//               onChange={(e) => setTextInput(e.target.value)}
+//               placeholder="Enter your text here"
+//               className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//             ></textarea>
+//           )}
+
+//           {inputType === "wifi" && (
+//             <div className="space-y-4">
+//               <input
+//                 type="text"
+//                 value={wifiDetails.ssid}
+//                 onChange={(e) => setWifiDetails({ ...wifiDetails, ssid: e.target.value })}
+//                 placeholder="SSID"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//               <input
+//                 type="text"
+//                 value={wifiDetails.password}
+//                 onChange={(e) => setWifiDetails({ ...wifiDetails, password: e.target.value })}
+//                 placeholder="Password"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//               <select
+//                 value={wifiDetails.encryption}
+//                 onChange={(e) => setWifiDetails({ ...wifiDetails, encryption: e.target.value })}
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               >
+//                 <option value="WPA">WPA/WPA2</option>
+//                 <option value="WEP">WEP</option>
+//                 <option value="">None</option>
+//               </select>
+//             </div>
+//           )}
+
+// {inputType === "email" && (
+//   <div className="space-y-4">
+//     <input
+//       type="email"
+//       value={emailDetails.address}
+//       onChange={(e) =>
+//         setEmailDetails({ ...emailDetails, address: e.target.value })
+//       }
+//       placeholder="Email Address"
+//       className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//     />
+//     <input
+//       type="text"
+//       value={emailDetails.subject}
+//       onChange={(e) =>
+//         setEmailDetails({ ...emailDetails, subject: e.target.value })
+//       }
+//       placeholder="Subject"
+//       className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//     />
+//     <textarea
+//       value={emailDetails.body}
+//       onChange={(e) =>
+//         setEmailDetails({ ...emailDetails, body: e.target.value })
+//       }
+//       placeholder="Message Body"
+//       className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//     ></textarea>
+//   </div>
+// )}
+
+// {inputType === "phone" && (
+//   <input
+//     type="tel"
+//     value={phoneDetails.number}
+//     onChange={(e) =>
+//       setPhoneDetails({ number: e.target.value })
+//     }
+//     placeholder="Phone Number"
+//     className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//   />
+// )}
+
+// {inputType === "sms" && (
+//         <div className="space-y-4">
+//           <input
+//             type="tel"
+//             value={smsDetails.number}
+//             onChange={(e) =>
+//               setSmsDetails({ ...smsDetails, number: e.target.value })
+//             }
+//             placeholder="Phone Number"
+//             className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//           />
+//           <textarea
+//             value={smsDetails.message}
+//             onChange={(e) =>
+//               setSmsDetails({ ...smsDetails, message: e.target.value })
+//             }
+//             placeholder="Message"
+//             className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+//           ></textarea>
+//           <button
+//             onClick={handleSendSMS}
+//             className="w-full p-4 rounded-lg bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+//           >
+//             Send SMS
+//           </button>
+//         </div>
+//       )}
+    
+
+
+
+//           {inputType === "geo" && (
+//             <div className="space-y-4">
+//               <input
+//                 type="text"
+//                 value={geoDetails.latitude}
+//                 onChange={(e) => setGeoDetails({ ...geoDetails, latitude: e.target.value })}
+//                 placeholder="Latitude"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//               <input
+//                 type="text"
+//                 value={geoDetails.longitude}
+//                 onChange={(e) => setGeoDetails({ ...geoDetails, longitude: e.target.value })}
+//                 placeholder="Longitude"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//             </div>
+//           )}
+
+//           {inputType === "calendar" && (
+//             <div className="space-y-4">
+//               <input
+//                 type="text"
+//                 value={calendarDetails.summary}
+//                 onChange={(e) => setCalendarDetails({ ...calendarDetails, summary: e.target.value })}
+//                 placeholder="Event Summary"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//               <input
+//                 type="datetime-local"
+//                 value={calendarDetails.startTime}
+//                 onChange={(e) => setCalendarDetails({ ...calendarDetails, startTime: e.target.value })}
+//                 placeholder="Start Time"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//               <input
+//                 type="datetime-local"
+//                 value={calendarDetails.endTime}
+//                 onChange={(e) => setCalendarDetails({ ...calendarDetails, endTime: e.target.value })}
+//                 placeholder="End Time"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//               <input
+//                 type="text"
+//                 value={calendarDetails.location}
+//                 onChange={(e) => setCalendarDetails({ ...calendarDetails, location: e.target.value })}
+//                 placeholder="Location"
+//                 className="w-full p-4 rounded-lg border-2 border-gray-300"
+//               />
+//             </div>
+//           )}
+
+//           <button
+//             onClick={handleContinue}
+//             className="mt-4 w-full bg-indigo-500 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 shadow-md"
+//           >
+//             Continue
+//           </button>
+//         </div>
+//       ) : (
+//         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+//           <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
+//             <div className="mb-4">
+//               <p className="text-base font-medium italic text-black">
+//                 Custom QR Code Generator
+//               </p>
+//             </div>
+//             <div className="mb-6">
+//               <div className="flex border-b-2 border-gray-200 mb-6 overflow-x-auto">
+//                 {["Basic", "Styles", "Design", "Eyes", "Effects", "Stickers", "Shapes"].map((tab) => (
+//                   <button
+//                     key={tab}
+//                     onClick={() => setActiveTab(tab.toLowerCase())}
+//                     className={`px-6 py-3 text-base font-semibold transition-colors duration-300 ${
+//                       activeTab === tab.toLowerCase()
+//                         ? "border-b-4 border-indigo-500 text-indigo-500"
+//                         : "text-gray-500 hover:text-gray-700"
+//                     }`}
+//                   >
+//                     {tab}
+//                   </button>
+//                 ))}
+//               </div>
+//               {renderTabContent()}
+//             </div>
+//           </div>
+
+//           <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white p-8 shadow-lg">
+//             <h2 className="text-m font-semibold mb-4 text-center text-black">
+//               Preview
+//             </h2>
+//             {renderPreview()}
+//             <div className="mt-4 text-center text-sm text-black">
+//               <p>Scan to test the QR code</p>
+//               {url && (
+//                 <p className="mt-2">
+//                   URL: <span className="text-indigo-200">{url}</span>
+//                 </p>
+//               )}
+//             </div>
+//             <button
+//               onClick={handleDownload}
+//               className="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center gap-2 shadow-md"
+//             >
+//               Download QR Code
+//             </button>
+
+//             <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-2 rounded">
+//   Sign in with Google
+// </button>
+
+// <button 
+//   onClick={generateQrCode} 
+//   className={`bg-green-500 text-white px-4 py-2 rounded ${!auth.currentUser ? "opacity-50 cursor-not-allowed" : ""}`} 
+//   disabled={!auth.currentUser}
+// >
+//   Generate QR Code
+// </button>
+
+
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   </div>
+// );
+// };
+
+// export default QRGenerator;
+
 return (
-  <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-900 p-8">
     <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-center text-indigo-700">
+      <h1 className="text-4xl font-bold mb-8 text-center text-indigo-700">
         QR Code Customizer
       </h1>
 
       {!isUrlEntered ? (
-        <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
+        <div className="bg-white rounded-xl p-8 shadow-lg">
           <h2 className="text-lg font-semibold mb-4 text-center text-black">
             Choose Input Type
           </h2>
@@ -1801,8 +2254,8 @@ return (
             {["url", "text", "wifi", "email", "phone", "sms", "geo", "calendar"].map((type) => (
               <button
                 key={type}
-                className={`px-4 py-2 rounded ${
-                  inputType === type ? "bg-indigo-500 text-white" : "bg-gray-200 text-black"
+                className={`px-4 py-2 rounded transition-all duration-300 ${
+                  inputType === type ? "bg-indigo-500 text-white" : "bg-gray-200 text-black hover:bg-gray-300"
                 }`}
                 onClick={() => setInputType(type)}
               >
@@ -1858,79 +2311,64 @@ return (
             </div>
           )}
 
-{inputType === "email" && (
-  <div className="space-y-4">
-    <input
-      type="email"
-      value={emailDetails.address}
-      onChange={(e) =>
-        setEmailDetails({ ...emailDetails, address: e.target.value })
-      }
-      placeholder="Email Address"
-      className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-    />
-    <input
-      type="text"
-      value={emailDetails.subject}
-      onChange={(e) =>
-        setEmailDetails({ ...emailDetails, subject: e.target.value })
-      }
-      placeholder="Subject"
-      className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-    />
-    <textarea
-      value={emailDetails.body}
-      onChange={(e) =>
-        setEmailDetails({ ...emailDetails, body: e.target.value })
-      }
-      placeholder="Message Body"
-      className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-    ></textarea>
-  </div>
-)}
+          {inputType === "email" && (
+            <div className="space-y-4">
+              <input
+                type="email"
+                value={emailDetails.address}
+                onChange={(e) => setEmailDetails({ ...emailDetails, address: e.target.value })}
+                placeholder="Email Address"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              />
+              <input
+                type="text"
+                value={emailDetails.subject}
+                onChange={(e) => setEmailDetails({ ...emailDetails, subject: e.target.value })}
+                placeholder="Subject"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              />
+              <textarea
+                value={emailDetails.body}
+                onChange={(e) => setEmailDetails({ ...emailDetails, body: e.target.value })}
+                placeholder="Message Body"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              ></textarea>
+            </div>
+          )}
 
-{inputType === "phone" && (
-  <input
-    type="tel"
-    value={phoneDetails.number}
-    onChange={(e) =>
-      setPhoneDetails({ number: e.target.value })
-    }
-    placeholder="Phone Number"
-    className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-  />
-)}
+          {inputType === "phone" && (
+            <input
+              type="tel"
+              value={phoneDetails.number}
+              onChange={(e) => setPhoneDetails({ number: e.target.value })}
+              placeholder="Phone Number"
+              className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+            />
+          )}
 
-{inputType === "sms" && (
-        <div className="space-y-4">
-          <input
-            type="tel"
-            value={smsDetails.number}
-            onChange={(e) =>
-              setSmsDetails({ ...smsDetails, number: e.target.value })
-            }
-            placeholder="Phone Number"
-            className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-          />
-          <textarea
-            value={smsDetails.message}
-            onChange={(e) =>
-              setSmsDetails({ ...smsDetails, message: e.target.value })
-            }
-            placeholder="Message"
-            className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
-          ></textarea>
-          <button
-            onClick={handleSendSMS}
-            className="w-full p-4 rounded-lg bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Send SMS
-          </button>
-        </div>
-      )}
-    
-
-
+          {inputType === "sms" && (
+            <div className="space-y-4">
+              <input
+                type="tel"
+                value={smsDetails.number}
+                onChange={(e) => setSmsDetails({ ...smsDetails, number: e.target.value })}
+                placeholder="Phone Number"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              />
+              <textarea
+                value={smsDetails.message}
+                onChange={(e) => setSmsDetails({ ...smsDetails, message: e.target.value })}
+                placeholder="Message"
+                className="w-full p-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-700"
+              ></textarea>
+              <button
+                onClick={handleSendSMS}
+                className="w-full p-4 rounded-lg bg-indigo-600 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                Send SMS
+              </button>
+            </div>
+          )}
 
           {inputType === "geo" && (
             <div className="space-y-4">
@@ -1993,7 +2431,7 @@ return (
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white rounded-xl p-8 shadow-lg">
+          <div className="bg-white rounded-xl p-8 shadow-lg">
             <div className="mb-4">
               <p className="text-base font-medium italic text-black">
                 Custom QR Code Generator
@@ -2019,7 +2457,7 @@ return (
             </div>
           </div>
 
-          <div className="bg-gradient-to-b from-blue-200 via-indigo-200 to-white p-8 shadow-lg">
+          <div className="bg-white p-8 shadow-lg">
             <h2 className="text-m font-semibold mb-4 text-center text-black">
               Preview
             </h2>
@@ -2038,6 +2476,18 @@ return (
             >
               Download QR Code
             </button>
+
+            <button onClick={handleLogin} className="bg-blue-500 text-white px-4 py-2 rounded">
+              Sign in with Google
+            </button>
+
+            <button 
+              onClick={generateQrCode} 
+              className={`bg-green-500 text-white px-4 py-2 rounded ${!auth.currentUser ? "opacity-50 cursor-not-allowed" : ""}`} 
+              disabled={!auth.currentUser}
+            >
+              Generate QR Code
+            </button>
           </div>
         </div>
       )}
@@ -2047,4 +2497,3 @@ return (
 };
 
 export default QRGenerator;
-
